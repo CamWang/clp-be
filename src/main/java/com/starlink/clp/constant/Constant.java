@@ -2,17 +2,12 @@ package com.starlink.clp.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Constant {
 
     @Getter
-    @NoArgsConstructor
     @AllArgsConstructor
-    public enum Language {
+    public enum LanguageEnum {
         C(100, "c"),
         CPP(101, "cpp"),
         CS(102, "cs"),
@@ -36,7 +31,7 @@ public class Constant {
         SCALA(120, "scala"),
         PROPERTIES(121, "properties");
 
-        private final Integer id;
+        private final Integer key;
         private final String name;
 
     }
