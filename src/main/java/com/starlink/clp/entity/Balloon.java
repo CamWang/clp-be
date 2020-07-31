@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 气球实体类
@@ -15,14 +16,14 @@ import javax.persistence.*;
 @Data
 @Entity
 @Component
-public class Balloon {
+public class Balloon implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "unsigned int")
+    @Column(columnDefinition = "int unsigned")
     private Integer id;
 
-    @Column(columnDefinition = "default false")
-    private Boolean done;
+    @Column(columnDefinition = "tinyint default 0")
+    private Boolean finished;
 
 }

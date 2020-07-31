@@ -1,5 +1,6 @@
 package com.starlink.clp.exception;
 
+import com.starlink.clp.constant.Constant;
 import com.starlink.clp.constant.Exception;
 import lombok.Data;
 

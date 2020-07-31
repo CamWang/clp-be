@@ -2,9 +2,17 @@ package com.starlink.clp.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+/**
+ * 常量
+ *
+ * @author CamWang
+ * @since 2020/7/29
+ */
 public class Constant {
 
+    // 语言常量 - 一些奇奇怪怪的语言是给粘贴板功能设置的
     @Getter
     @AllArgsConstructor
     public enum LanguageEnum {
@@ -33,7 +41,22 @@ public class Constant {
 
         private final Integer key;
         private final String name;
+    }
 
+    // 难度分类 - 由低到高
+    @Getter
+    @AllArgsConstructor
+    public enum DifficultyEnum {
+        NOOB(0, "noob"),
+        BEGINNER(1, "beginner"),
+        EASY(2, "easy"),
+        NORMAL(3, "normal"),
+        HARD(4, "hard"),
+        EXPERT(5, "expert"),
+        HELL(6, "hell");
+
+        private final Integer level;
+        private final String nick;
     }
 
 }

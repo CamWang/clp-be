@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * 判题机实体类
@@ -17,13 +18,15 @@ import javax.persistence.Id;
 @Data
 @Entity
 @Component
-public class Judgehost {
+public class Judgehost implements Serializable {
 
+    // 判题机名称
     @Id
     @Column(columnDefinition = "varchar(64)")
     private String name;
 
-    @Column(columnDefinition = "default true")
+    // 是否启用该判题机
+    @Column(columnDefinition = "tinyint default 1")
     private Boolean enabled;
 
 }

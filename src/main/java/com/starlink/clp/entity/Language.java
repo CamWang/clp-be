@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 编程语言实体类
@@ -15,23 +16,31 @@ import javax.persistence.*;
 @Data
 @Entity
 @Component
-public class Language {
+public class Language implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "unsigned int")
+    @Column(columnDefinition = "int unsigned")
     private Integer id;
 
+    // 语言名称
     @Column(columnDefinition = "varchar(32)")
     private String name;
 
-    @Column(columnDefinition = "default true")
+    // 语言代号
+    @Column(columnDefinition = "tinyint unsigned")
+    private Integer code;
+
+    // 是否启用语言
+    @Column(columnDefinition = "tinyint default 1")
     private Boolean enabled;
 
+    // 时间倍率 - 性能差语言可能跑的慢一点
     @Column(columnDefinition = "float(4,1)")
-    private Float time_factor;
+    private Float timeFactor;
 
+    // 内存倍率 - 性能差的语言内存占用多一点
     @Column(columnDefinition = "float(4,1)")
-    private Float memory_factor;
+    private Float memoryFactor;
 
 }

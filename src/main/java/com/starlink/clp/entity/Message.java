@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 站内信实体类
@@ -15,15 +16,17 @@ import javax.persistence.*;
 @Data
 @Entity
 @Component
-public class Message {
+public class Message implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "unsigned int")
+    @Column(columnDefinition = "int unsigned")
     private Integer id;
 
-    @Column(columnDefinition = "text")
+    // 消息内容
+    @Column(columnDefinition = "varchar(2048)")
     private String text;
+
 
 
 }

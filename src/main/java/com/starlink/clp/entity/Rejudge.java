@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,15 +17,20 @@ import java.util.Date;
 @Data
 @Entity
 @Component
-public class Rejudge {
+public class Rejudge implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "unsigned int")
+    @Column(columnDefinition = "int unsigned")
     private Integer id;
 
+    // 重判开始时间 - 是否为null是是否开始判题标志
     @Column(columnDefinition = "datetime(3)")
     private Date start;
+
+    // 重判结束时间
+    @Column(columnDefinition = "datetime(3)")
+    private Date end;
 
 
 }

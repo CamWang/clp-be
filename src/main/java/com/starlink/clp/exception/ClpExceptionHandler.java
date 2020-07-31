@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ClpExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResult> handleException(Exception exception) {
         return ResponseEntity.status(exception.getExceptionEnum().getCode())
                 .body(new ExceptionResult(exception.getExceptionEnum()));

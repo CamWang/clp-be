@@ -7,28 +7,36 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
+ * 题目/比赛等实体的标签
+ *
  * @author CamWang
- * @since 2020/7/28 18:08
+ * @since 2020/7/30 11:04
  */
 
 @Data
 @Entity
 @Component
-public class ClipBoard implements Serializable {
+public class Tag implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "int unsigned")
     private Integer id;
 
+    // 分类 - 是给题目用还是比赛用
     @Column(columnDefinition = "varchar(32)")
-    private String name;
+    private String category;
 
+    // 标签显示内容
     @Column(columnDefinition = "varchar(32)")
-    private String language;
+    private String content;
 
-    @Column(columnDefinition = "text")
-    private String code;
+    // 标签颜色
+    @Column(columnDefinition = "varchar(32)")
+    private String color;
 
+    // 标签图标
+    @Column(columnDefinition = "varchar(32)")
+    private String icon;
 
 }

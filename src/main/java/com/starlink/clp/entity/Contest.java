@@ -5,7 +5,10 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 比赛实体类
@@ -17,11 +20,11 @@ import java.util.Date;
 @Data
 @Entity
 @Component
-public class Contest {
+public class Contest implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "unsigned int")
+    @Column(columnDefinition = "int unsigned")
     private Integer id;
 
     @Column(columnDefinition = "varchar(128)")
@@ -30,19 +33,27 @@ public class Contest {
     @Column(columnDefinition = "text")
     private String description;
 
+    @Column(columnDefinition = "tinyint unsigned")
+    private Integer penalty;
+
+    @Column(columnDefinition = "tinyint default 1")
+    private Boolean privately;
+
+    // 是否向用户展示错误
+    @Column(columnDefinition = "tinyint default 0")
+    private Boolean error;
+
     @Column(columnDefinition = "datetime")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date start;
 
     @Column(columnDefinition = "datetime")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date end;
 
     @Column(columnDefinition = "datetime")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
-    private Date lock;
+    private Date finish;
 
-    @Column(columnDefinition = "default false")
+    @Column(columnDefinition = "tinyint default 0")
     private Boolean enabled;
+
 
 }

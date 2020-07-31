@@ -4,6 +4,9 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 班级实体类
@@ -15,11 +18,11 @@ import javax.persistence.*;
 @Data
 @Entity
 @Component
-public class Clazz {
+public class Clazz implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "unsigned int")
+    @Column(columnDefinition = "int unsigned")
     private Integer id;
 
     @Column(columnDefinition = "varchar(128)")
@@ -27,4 +30,5 @@ public class Clazz {
 
     @Column(columnDefinition = "varchar(255)")
     private String description;
+
 }
