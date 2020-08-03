@@ -1,6 +1,5 @@
 package com.starlink.clp.exception;
 
-import com.starlink.clp.constant.Exception;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,9 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ClpExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResult> handleException(Exception exception) {
-        return ResponseEntity.status(exception.getExceptionEnum().getCode())
-                .body(new ExceptionResult(exception.getExceptionEnum()));
+    @ExceptionHandler(ClpException.class)
+    public ResponseEntity<ExceptionResult> handleException(ClpException clpException) {
+        return ResponseEntity.status(clpException.getExceptionEnum().getCode())
+                .body(new ExceptionResult(clpException.getExceptionEnum()));
     }
+
 }

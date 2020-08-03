@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 交题记录实体类
@@ -49,5 +47,7 @@ public class Submission implements Serializable {
     @Column(columnDefinition = "text")
     private String error;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }

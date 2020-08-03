@@ -1,14 +1,11 @@
 package com.starlink.clp.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 队伍实体类

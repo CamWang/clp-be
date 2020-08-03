@@ -1,7 +1,6 @@
 package com.starlink.clp.exception;
 
-import com.starlink.clp.constant.Constant;
-import com.starlink.clp.constant.Exception;
+import com.starlink.clp.constant.ExceptionEnum;
 import lombok.Data;
 
 /**
@@ -15,7 +14,7 @@ public class ExceptionResult {
     private String message;
     private Long timestamp;
 
-    public ExceptionResult(Exception.ExceptionEnum exceptionEnums) {
+    public ExceptionResult(ExceptionEnum exceptionEnums) {
         this.status = exceptionEnums.getCode();
         this.message = exceptionEnums.getMessage();
         this.timestamp = System.currentTimeMillis();

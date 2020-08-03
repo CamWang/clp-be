@@ -79,6 +79,9 @@ public class User implements Serializable, UserDetails{
     @Column(columnDefinition = "datetime")
     private Date register;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Submission> submissions;
+
     // 获取权限
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
