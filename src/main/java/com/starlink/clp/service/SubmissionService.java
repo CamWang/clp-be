@@ -1,13 +1,10 @@
 package com.starlink.clp.service;
 
-import com.starlink.clp.entity.Submission;
 import com.starlink.clp.projection.SubmissionProjection;
 import com.starlink.clp.repository.SubmissionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author CamWang

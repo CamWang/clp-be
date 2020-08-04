@@ -16,5 +16,5 @@ import java.util.List;
  */
 @Repository
 public interface SubmissionRepository extends JpaRepository<Submission, String>, JpaSpecificationExecutor<Submission> {
-    Page<SubmissionProjection> findAllUsing(Pageable pageable);
+    Page<SubmissionProjection> findAllBy(Pageable pageable);
 }
