@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 班级实体类
@@ -23,10 +26,20 @@ public class Clazz implements Serializable {
     @Column(columnDefinition = "int unsigned")
     private Integer id;
 
+    // 班级名称
     @Column(columnDefinition = "varchar(128)")
     private String name;
 
+    // 班级描述
     @Column(columnDefinition = "varchar(255)")
     private String description;
+
+    // 班级用户
+    @OneToMany(mappedBy = "clazz", fetch = FetchType.LAZY)
+    private Collection<User> user = new ArrayList<>();
+
+    // 班级学校
+    @ManyToOne(fetch = FetchType.LAZY)
+    private School school;
 
 }

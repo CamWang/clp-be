@@ -79,8 +79,37 @@ public class User implements Serializable, UserDetails{
     @Column(columnDefinition = "datetime")
     private Date register;
 
+    // 提交的题解
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Submission> submissions;
+    private Collection<Submission> submissions = new ArrayList<>();
+
+    // 粘贴板内容
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Collection<ClipBoard> clipBoards = new ArrayList<>();
+
+    // 发送过的消息
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Collection<Message> messages = new ArrayList<>();
+
+    // 接收的消息
+    @ManyToMany(mappedBy = "receivers")
+    private Collection<Message> receivedMessages = new ArrayList<>();
+
+    // 参加的所有比赛
+    @ManyToMany(mappedBy = "users")
+    private Collection<Contest> joinedContests = new ArrayList<>();
+
+    // 所在队伍
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Team team;
+
+    // 所在学校
+    @ManyToOne(fetch = FetchType.LAZY)
+    private School school;
+
+    // 所在班级
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Clazz clazz;
 
     // 获取权限
     @Override

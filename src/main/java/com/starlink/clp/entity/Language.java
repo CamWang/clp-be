@@ -36,11 +36,11 @@ public class Language implements Serializable {
     private Boolean enabled;
 
     // 时间倍率 - 性能差语言可能跑的慢一点
-    @Column(columnDefinition = "float(4,1)")
+    @Column(columnDefinition = "float")
     private Float timeFactor;
 
     // 内存倍率 - 性能差的语言内存占用多一点
-    @Column(columnDefinition = "float(4,1)")
+    @Column(columnDefinition = "float")
     private Float memoryFactor;
 
 }

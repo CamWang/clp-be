@@ -5,7 +5,10 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 队伍实体类
@@ -35,5 +38,17 @@ public class Team implements Serializable {
     // 队伍创建时间
     @Column(columnDefinition = "datetime")
     private Date register;
+
+    // 队员
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    private Collection<User> users = new ArrayList<>();
+
+    // 队伍所属学校
+    @ManyToOne(fetch = FetchType.LAZY)
+    private School school;
+
+    // 比赛对应队伍
+    @ManyToMany(mappedBy = "teams")
+    private Collection<Contest> contests;
 
 }

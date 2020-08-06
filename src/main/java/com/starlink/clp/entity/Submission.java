@@ -1,11 +1,15 @@
 package com.starlink.clp.entity;
 
+import com.starlink.clp.constant.LanguageEnum;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 交题记录实体类
@@ -27,6 +31,10 @@ public class Submission implements Serializable {
     @Column(columnDefinition = "datetime(3)")
     private Date submit;
 
+    // 解题使用的语言
+    @Column(columnDefinition = "tinyint unsigned")
+    private LanguageEnum language;
+
     // 解题代码
     @Column(columnDefinition = "text")
     private String code;
@@ -47,7 +55,20 @@ public class Submission implements Serializable {
     @Column(columnDefinition = "text")
     private String error;
 
+    // 重判题目
+    @OneToMany(mappedBy = "submission", fetch = FetchType.LAZY)
+    private Collection<Rejudge> rejudges = new ArrayList<>();
+
+    // 提交题解的用户
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    // 题解所属的比赛
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Contest contest;
+
+    // 题解所属问题
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Problem problem;
 
 }

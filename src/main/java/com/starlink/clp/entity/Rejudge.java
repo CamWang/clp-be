@@ -32,5 +32,9 @@ public class Rejudge implements Serializable {
     @Column(columnDefinition = "datetime(3)")
     private Date end;
 
+    // 重判与题解的关联
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Submission submission;
+
 
 }

@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 学校实体类
@@ -34,5 +37,21 @@ public class School implements Serializable {
     // 学校图片
     @Column(columnDefinition = "varchar(255)")
     private String avatar;
+
+    // 用户学校关联
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    private Collection<User> user = new ArrayList<>();
+
+    // 班级学校关联
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    private Collection<Clazz> clazzes = new ArrayList<>();
+
+    // 队伍学校关联
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    private Collection<Team> teams = new ArrayList<>();
+
+    // 比赛学校关联
+    @ManyToMany(mappedBy = "schools", fetch = FetchType.LAZY)
+    private Collection<Contest> contests;
 
 }

@@ -1,5 +1,6 @@
 package com.starlink.clp.entity;
 
+import com.starlink.clp.constant.LanguageEnum;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -21,14 +22,20 @@ public class ClipBoard implements Serializable {
     @Column(columnDefinition = "int unsigned")
     private Integer id;
 
+    // 后端自动生成非重复的字串代码
     @Column(columnDefinition = "varchar(32)")
     private String name;
 
-    @Column(columnDefinition = "varchar(32)")
-    private String language;
+    // 语言
+    @Column(columnDefinition = "tinyint unsigned")
+    private LanguageEnum language;
 
+    // 粘贴板代码
     @Column(columnDefinition = "text")
     private String code;
 
+    // 创建粘贴板的用户
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }
