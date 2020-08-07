@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -44,8 +45,8 @@ public class Problem implements Serializable {
     private DifficultyEnum difficulty;
 
     // 题目时限 - 以秒为单位
-    @Column(columnDefinition = "float")
-    private Float timeLimit;
+    @Column(columnDefinition = "decimal(6,2)")
+    private BigDecimal timeLimit;
 
     // 内存限制 - 以MB为单位
     @Column(columnDefinition = "int unsigned")
