@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 编程语言实体类
@@ -36,11 +37,11 @@ public class Language implements Serializable {
     private Boolean enabled;
 
     // 时间倍率 - 性能差语言可能跑的慢一点
-    @Column(columnDefinition = "float")
-    private Float timeFactor;
+    @Column(columnDefinition = "decimal(6,2)")
+    private BigDecimal timeFactor;
 
     // 内存倍率 - 性能差的语言内存占用多一点
-    @Column(columnDefinition = "float")
-    private Float memoryFactor;
+    @Column(columnDefinition = "decimal(6,2)")
+    private BigDecimal memoryFactor;
 
 }
