@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "clp.avatar.max.size",
+      "type": "java.lang.Long",
+      "description": "Max size in KB for avatars(default to 2MB = 2097152Bytes)."
+    },
+    {
+      "name": "clp.avatar.file.path",
+      "type": "java.lang.String",
+      "description": "File path for Avatars."
+    }
+  ]
+}

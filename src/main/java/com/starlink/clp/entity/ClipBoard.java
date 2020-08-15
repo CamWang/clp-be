@@ -14,7 +14,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Component
 public class ClipBoard implements Serializable {
 
     @Id
@@ -35,7 +34,7 @@ public class ClipBoard implements Serializable {
     private String code;
 
     // 创建粘贴板的用户
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private User user;
 
 }

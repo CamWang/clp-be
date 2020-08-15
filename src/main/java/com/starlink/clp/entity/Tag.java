@@ -42,7 +42,7 @@ public class Tag implements Serializable {
     private String icon;
 
     // 与题目关联的标签
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "problem_tag",
             joinColumns = @JoinColumn,

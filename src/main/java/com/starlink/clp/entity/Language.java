@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Component
 public class Language implements Serializable {
 
     @Id

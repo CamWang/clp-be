@@ -19,4 +19,10 @@ public class ExceptionResult {
         this.message = exceptionEnums.getMessage();
         this.timestamp = System.currentTimeMillis();
     }
+
+    public ExceptionResult(Integer status, String message) {
+        this.status = status;
+        this.message = message;
+        this.timestamp = System.currentTimeMillis();
+    }
 }

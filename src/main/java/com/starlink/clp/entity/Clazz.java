@@ -18,7 +18,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Component
 public class Clazz implements Serializable {
 
     @Id
@@ -35,11 +34,11 @@ public class Clazz implements Serializable {
     private String description;
 
     // 班级用户
-    @OneToMany(mappedBy = "clazz", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clazz", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<User> user = new ArrayList<>();
 
     // 班级学校
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private School school;
 
 }

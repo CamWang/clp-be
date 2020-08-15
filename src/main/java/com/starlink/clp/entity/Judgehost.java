@@ -17,7 +17,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Component
 public class Judgehost implements Serializable {
 
     // 判题机名称

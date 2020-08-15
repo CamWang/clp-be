@@ -1,6 +1,8 @@
 package com.starlink.clp.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -15,7 +17,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Component
 public class Balloon implements Serializable {
 
     @Id
@@ -28,7 +29,7 @@ public class Balloon implements Serializable {
     private Boolean processed;
 
     // 气球与提交关联
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "submission_ballon",
             joinColumns = @JoinColumn,
@@ -37,7 +38,7 @@ public class Balloon implements Serializable {
     private Submission submission;
 
     // 气球与比赛关联
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Contest contest;
 
 }

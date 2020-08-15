@@ -19,7 +19,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Component
 public class Team implements Serializable {
 
     @Id
@@ -40,15 +39,15 @@ public class Team implements Serializable {
     private Date register;
 
     // 队员
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<User> users = new ArrayList<>();
 
     // 队伍所属学校
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private School school;
 
     // 比赛对应队伍
-    @ManyToMany(mappedBy = "teams")
+    @ManyToMany(mappedBy = "teams", cascade = CascadeType.PERSIST)
     private Collection<Contest> contests;
 
 }

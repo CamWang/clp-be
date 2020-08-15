@@ -18,7 +18,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Component
 public class School implements Serializable {
 
     @Id
@@ -39,19 +38,19 @@ public class School implements Serializable {
     private String avatar;
 
     // 用户学校关联
-    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<User> user = new ArrayList<>();
 
     // 班级学校关联
-    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Clazz> clazzes = new ArrayList<>();
 
     // 队伍学校关联
-    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Team> teams = new ArrayList<>();
 
     // 比赛学校关联
-    @ManyToMany(mappedBy = "schools", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "schools", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Contest> contests;
 
 }

@@ -16,7 +16,6 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Component
 public class Executable implements Serializable {
 
     @Id

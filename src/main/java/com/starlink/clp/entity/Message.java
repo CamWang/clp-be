@@ -16,7 +16,6 @@ import java.util.Collection;
 
 @Data
 @Entity
-@Component
 public class Message implements Serializable {
 
     @Id
@@ -29,15 +28,15 @@ public class Message implements Serializable {
     private String text;
 
     // 消息发送者
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private User user;
 
     // 发送给某场比赛参赛队员的消息
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Contest contest;
 
     // 消息接收者
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_message",
             joinColumns = @JoinColumn,

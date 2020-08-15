@@ -60,15 +60,15 @@ public class Submission implements Serializable {
     private Collection<Rejudge> rejudges = new ArrayList<>();
 
     // 提交题解的用户
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private User user;
 
     // 题解所属的比赛
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Contest contest;
 
     // 题解所属问题
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Problem problem;
 
 }

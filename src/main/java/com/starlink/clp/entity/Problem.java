@@ -20,7 +20,6 @@ import java.util.Collection;
 
 @Data
 @Entity
-@Component
 public class Problem implements Serializable {
 
     @Id
@@ -57,19 +56,19 @@ public class Problem implements Serializable {
     private Integer outputLimit;
 
     // 问题与判题结果关联
-    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Submission> submissions = new ArrayList<>();
 
     // 问题相关解答运行相关脚本
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Executable runScript;
 
     // 问题相关解答比较相关脚本
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Executable compareScript;
 
     // 问题与问题标签关联
-    @ManyToMany(mappedBy = "problems")
+    @ManyToMany(mappedBy = "problems", cascade = CascadeType.PERSIST)
     private Collection<Tag> tags = new ArrayList<>();
 
 

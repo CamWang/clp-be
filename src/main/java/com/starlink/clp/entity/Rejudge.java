@@ -16,7 +16,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Component
 public class Rejudge implements Serializable {
 
     @Id
@@ -33,7 +32,7 @@ public class Rejudge implements Serializable {
     private Date end;
 
     // 重判与题解的关联
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Submission submission;
 
 

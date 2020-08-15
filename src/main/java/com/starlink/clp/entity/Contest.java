@@ -19,7 +19,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Component
 public class Contest implements Serializable {
 
     @Id
@@ -68,19 +67,19 @@ public class Contest implements Serializable {
     private Boolean enabled;
 
     // 比赛与提交题解关联
-    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Submission> submissions = new ArrayList<>();
 
     // 比赛与气球关联
-    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Balloon> balloons = new ArrayList<>();
 
     // 比赛与站内信关联
-    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "contest", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Message> messages = new ArrayList<>();
 
     // 参加比赛的所有用户
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_contest",
             joinColumns = @JoinColumn,
@@ -89,7 +88,7 @@ public class Contest implements Serializable {
     private Collection<User> users;
 
     // 参加比赛的所有队伍
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "team_contest",
             joinColumns = @JoinColumn,
@@ -98,7 +97,7 @@ public class Contest implements Serializable {
     private Collection<Team> teams;
 
     // 参加比赛的所有学校
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "school_contest",
             joinColumns = @JoinColumn,
