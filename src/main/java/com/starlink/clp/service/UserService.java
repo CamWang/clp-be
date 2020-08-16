@@ -69,7 +69,6 @@ public class UserService {
         if (oldUser == null) {
             throw new ClpException(ExceptionEnum.USER_NOT_EXIST);
         }
-
         /**
          * 添加密码比较，oldPassword与数据库存储的用户密码进行比较，添加Spring Security支持后从容器里取
          * boolean PasswordEncoder.matches(pass1, pass2)

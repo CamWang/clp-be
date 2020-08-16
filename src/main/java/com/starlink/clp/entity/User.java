@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

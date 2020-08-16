@@ -30,6 +30,7 @@ public enum ExceptionEnum {
     IMAGE_NAME_EMPTY(444, "图片名为空"),
     IMAGE_NO_SUFFIX(445, "图片没有文件格式"),
     IDENTIFIER_PARAM_MISSING(446, "用户ID或用户名缺失"),
+    SERVER_DOOMED(447, "服务器爆炸了"),
 
 
     // 安全异常
