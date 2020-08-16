@@ -16,5 +16,4 @@ public interface UserRepository extends CrudRepository<User, Integer>, PagingAnd
     UserInfo getFirstById(Integer id);
     Boolean existsUserByUsername(String username);
     User findUserByUsernameAndId(String username, Integer id);
-
 }

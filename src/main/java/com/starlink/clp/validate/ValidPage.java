@@ -9,6 +9,7 @@ import javax.validation.constraintvalidation.ValidationTarget;
 import java.lang.annotation.*;
 
 import com.starlink.clp.validate.ValidPage.List;
+import com.starlink.clp.validate.impl.PageValidator;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -29,7 +30,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Repeatable(List.class)
-@Constraint(validatedBy = EmptyValidator.class)
+@Constraint(validatedBy = PageValidator.class)
 public @interface ValidPage {
     String message() default "Page parameter error.";
 
