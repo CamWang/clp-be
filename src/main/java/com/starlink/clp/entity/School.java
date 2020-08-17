@@ -1,13 +1,13 @@
 package com.starlink.clp.entity;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * 学校实体类
@@ -27,10 +27,14 @@ public class School implements Serializable {
 
     // 学校名称
     @Column(columnDefinition = "varchar(128)")
+    @NotEmpty(message = "学校名字不能为空")
+    @Length(min = 3,max = 24,message = "学校名字在3-24字符之间")
     private String name;
 
     // 学校描述
     @Column(columnDefinition = "varchar(255)")
+    @NotEmpty(message = "学校描述不能为空")
+    @Length(min = 10,max = 255,message = "学校描述在10-255字符之间")
     private String description;
 
     // 学校图片

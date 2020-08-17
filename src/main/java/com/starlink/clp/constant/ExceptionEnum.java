@@ -46,6 +46,10 @@ public enum ExceptionEnum {
     // 登录异常
     USER_NOT_EXIST(460, "用户不存在"),
 
+    // 学校注册异常
+    SCHOOL_NOT_EXIST(466,"学校未注册"),
+    SCHOOL_ALREADY_EXIST_ERROR(467,"学校已被注册"),
+
     // 服务器内部异常
     IMAGE_WRITE_ERROR(470, "图片保存出错"),
 
