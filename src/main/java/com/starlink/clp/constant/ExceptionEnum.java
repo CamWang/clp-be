@@ -46,16 +46,18 @@ public enum ExceptionEnum {
     // 登录异常
     USER_NOT_EXIST(460, "用户不存在"),
 
-    // 学校注册异常
-    SCHOOL_NOT_EXIST(466,"学校未注册"),
-    SCHOOL_ALREADY_EXIST_ERROR(467,"学校已被注册"),
+
+    // 学校活动异常
+    SCHOOL_NOT_EXIST(466, "学校未注册"),
+    SCHOOL_ALREADY_EXIST_ERROR(467, "学校已被注册"),
+    SCHOOL_PARAM_MISSING(468, "学校ID或学校名字缺失"),
+
 
     // 服务器内部异常
     IMAGE_WRITE_ERROR(470, "图片保存出错"),
 
     // 修改异常
     FATAL_BEAN_EXCEPTION(550, "修改信息时内部错误");
-
 
 
     private Integer code;
