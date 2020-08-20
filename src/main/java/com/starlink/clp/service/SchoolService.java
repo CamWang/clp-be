@@ -5,12 +5,14 @@ import com.starlink.clp.entity.School;
 import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.projection.school.SchoolInfo;
 import com.starlink.clp.repository.SchoolRepository;
+import com.starlink.clp.util.FileUtil;
 import com.starlink.clp.util.IgnoreNullPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -63,21 +65,25 @@ public class SchoolService {
 
     @Transactional
     public void modifySchool(School school) {
-        School oldSchopol = schoolRepo.findSchoolByNameAndId(school.getName(), school.getId());
-        if (oldSchopol == null) {
+        School oldSchool = schoolRepo.findSchoolById(school.getId());
+
+        if (oldSchool == null) {
             throw new ClpException(ExceptionEnum.SCHOOL_NOT_EXIST);
         }
-        BeanUtils.copyProperties(school, oldSchopol, IgnoreNullPropertiesUtil.getNullPropertyNames(school));
-        schoolRepo.save(oldSchopol);
+        if (testIfSchoolPresentByName(school.getName()) && !school.getId().equals(schoolRepo.getFirstByName(school.getName()).getId())) {
+            throw new ClpException(ExceptionEnum.SCHOOL_ALREADY_EXIST_ERROR);
+        }
+        BeanUtils.copyProperties(school, oldSchool, IgnoreNullPropertiesUtil.getNullPropertyNames(school));
+        schoolRepo.save(oldSchool);
     }
 
     @Transactional
-    public void setAvatar(Integer id, String name, String avatar) {
+    public void setAvatar(Integer id, String name, MultipartFile avatarFile) {
         School oldSchool = schoolRepo.findSchoolByNameAndId(name, id);
         if (oldSchool == null) {
             throw new ClpException(ExceptionEnum.SCHOOL_NOT_EXIST);
         }
-
+        String avatar = FileUtil.avatarProcess(avatarFile);
         oldSchool.setAvatar(avatar);
         schoolRepo.save(oldSchool);
     }

@@ -27,5 +27,6 @@ public interface SchoolRepository extends CrudRepository<School, Integer>, Pagin
     Boolean existsSchoolByName(String name);
     //修改学校信息时获取学校的完整信息
     School findSchoolByNameAndId(String name, Integer id);
+    School findSchoolById(Integer id);
 
 }

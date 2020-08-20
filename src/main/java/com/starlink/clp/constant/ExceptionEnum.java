@@ -48,9 +48,10 @@ public enum ExceptionEnum {
 
 
     // 学校活动异常
-    SCHOOL_NOT_EXIST(466, "学校未注册"),
-    SCHOOL_ALREADY_EXIST_ERROR(467, "学校已被注册"),
-    SCHOOL_PARAM_MISSING(468, "学校ID或学校名字缺失"),
+    SCHOOL_NOT_EXIST(466, "学校未注册，请与系统管理员联系"),
+    SCHOOL_ALREADY_EXIST_ERROR(467, "学校已被注册，请与系统管理员联系"),
+    SCHOOL_PARAM_ERROR(468, "学校参数信息错误"),
+    SCHOOL_INFO_MODIFY_EXCEPTION(469, "未发生有效的更改"),
 
 
     // 服务器内部异常
