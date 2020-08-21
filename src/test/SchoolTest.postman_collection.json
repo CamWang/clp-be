@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "b515e9a6-d8a9-4cd6-b8f7-8f936b703a13",
+		"name": "SchoolTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "学校列表请求，使用分页 http://localhost:10086/school",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/school?size=4&page=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "4"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "使用url参数\r\n\r\n传入size每页元素数、\r\npage从0开始的页码、\r\nsort排序方式\r\n三个参数对应默认为20、0、null\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "向前端提供学校的信息 http://localhost:10086/school/name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/school/name/?name=齐鲁工业大学",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school",
+						"name",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "齐鲁工业大学"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "测试用户选择的学校是否已注册 http://localhost:10086/school/present",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/school/present?name=齐鲁工业大学",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school",
+						"present"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "齐鲁工业大学"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "注销学校 http://localhost:10086/school/delet",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "HttpStatus",
+						"value": "CREATED",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":10,\r\n    \"name\": \"滨州大学1991\",\r\n    \"description\": \"不知名的理工院校\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/school/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "滨州好学校",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "不知名理工大学12311313213131332",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "上传学校头像 http://localhost:10086/school/avatar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "HttpStatus",
+						"value": "CREATED",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "北京大学",
+							"type": "text"
+						},
+						{
+							"key": "avatarFile",
+							"type": "file",
+							"src": "/G:/桌面备份/HTML练习/bg.jpg"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/school/avatar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school",
+						"avatar"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "滨州好学校",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "不知名理工大学12311313213131332",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "学校注册，必须有学校名字和学校描述 http://localhost:10086/school",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"滨州大学18141\",\r\n    \"description\": \"不知名的理11工院校\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/school",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "学校信息修改，必须有学校id http://localhost:10086/school",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": 6, \r\n\"name\": \"滨州大学119\", \r\n\"description\": \"不知名的理工院校\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/school",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"school"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5eb94b52-47ec-4a62-8270-5a4b8d009e25",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d908fa86-7376-48e3-97c7-b62ece46bb18",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
