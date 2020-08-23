@@ -47,6 +47,10 @@ public enum ExceptionEnum {
     // 登录异常
     USER_NOT_EXIST(460, "用户不存在"),
 
+    // 班级异常
+    CLAZZ_NOT_EXIST(461,"班级不存在"),
+    CLAZZ_ALREADY_EXIST_ERROR(462,"班级已经存在"),
+
     // 服务器内部异常
     IMAGE_WRITE_ERROR(470, "图片保存出错"),
 

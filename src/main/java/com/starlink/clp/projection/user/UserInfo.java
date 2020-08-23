@@ -31,5 +31,7 @@ public interface UserInfo {
     interface Clazz {
         Integer getId();
         String getName();
+        String getStudentId();
+
     }
 }
