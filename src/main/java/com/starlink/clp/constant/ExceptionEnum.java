@@ -53,6 +53,9 @@ public enum ExceptionEnum {
     SCHOOL_PARAM_ERROR(468, "学校参数信息错误"),
     SCHOOL_INFO_MODIFY_EXCEPTION(469, "未发生有效的更改"),
 
+    // 班级异常
+    CLAZZ_NOT_EXIST(461,"班级不存在"),
+    CLAZZ_ALREADY_EXIST_ERROR(462,"班级已经存在"),
 
     // 服务器内部异常
     IMAGE_WRITE_ERROR(470, "图片保存出错"),

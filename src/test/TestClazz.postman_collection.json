@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "d58ed1fb-7001-4c53-8276-9446e0a7779e",
+		"name": "TestClazz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pageable_clazz（查看所有的班级）",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/clazz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz"
+					]
+				},
+				"description": "获取所有班级的用户列表，使用分页"
+			},
+			"response": []
+		},
+		{
+			"name": "detailById（根据班级id检索）",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/clazz?id=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "detailByName（根据班级name检索）",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/clazz/detail_name?name=计科18-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz",
+						"detail_name"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "计科18-1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "datailBySchoolId（根据学校id检索）",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:10086/clazz/detail/schoolId?schoolId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz",
+						"detail",
+						"schoolId"
+					],
+					"query": [
+						{
+							"key": "schoolId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "datailBySchoolName（根据学校name检索）",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10086/clazz/detail/schoolName?schoolName=北京大学",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz",
+						"detail",
+						"schoolName"
+					],
+					"query": [
+						{
+							"key": "schoolName",
+							"value": "北京大学"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clazzRepeat （检验班级是否存在）",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/clazz/repeat?schoolId=1&name=计科18-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz",
+						"repeat"
+					],
+					"query": [
+						{
+							"key": "schoolId",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": "计科18-1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerClazz （班级注册）",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"计科19-3\",\r\n    \"description\":\"计科3！！！！\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/clazz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clazzModify （修改班级信息）",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"计科19-3\",\r\n    \"id\": \"11\",\r\n    \"description\": \"我们计科真的太厉害了\",\r\n    \"school\":{\r\n        \"school_id\":2\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/clazz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteClazz （注销班级）",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"id\": \"11\",\r\n        \"name\":\"计科19-3\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:10086/clazz/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10086",
+					"path": [
+						"clazz",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
