@@ -15,7 +15,9 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface SchoolRepository extends CrudRepository<School, Integer>, PagingAndSortingRepository<School, Integer>, JpaSpecificationExecutor<School> {
+public interface SchoolRepository extends CrudRepository<School, Integer>,
+        PagingAndSortingRepository<School, Integer>,
+        JpaSpecificationExecutor<School> {
 
     //对外提供学校公开列表
     Page<SchoolInfo> getAllBy(Pageable pageable);

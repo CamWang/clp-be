@@ -1,12 +1,13 @@
 package com.starlink.clp.controller;
 
 import com.starlink.clp.constant.ExceptionEnum;
+import com.starlink.clp.constant.FileTypeEnum;
 import com.starlink.clp.entity.User;
 import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.projection.user.UserInfo;
 import com.starlink.clp.projection.user.UserSimple;
 import com.starlink.clp.service.UserService;
-import com.starlink.clp.util.FileUtil;
+import com.starlink.clp.util.ImageUtil;
 import com.starlink.clp.validate.ValidPage;
 import com.starlink.clp.view.UserModifiedView;
 import com.starlink.clp.view.UserRegisterView;
@@ -140,7 +141,7 @@ public class UserController {
         if (!userService.testIfUsernamePresent(username)) {
             throw new ClpException(ExceptionEnum.USER_NOT_EXIST);
         }
-        String avatar = FileUtil.avatarProcess(avatarFile);
+        String avatar = ImageUtil.oneImageProcess(avatarFile, FileTypeEnum.USER_AVATAR);
         userService.setAvatar(id, username, password, avatar);
         return "头像上传成功";
     }

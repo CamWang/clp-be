@@ -1,11 +1,12 @@
 package com.starlink.clp.service;
 
 import com.starlink.clp.constant.ExceptionEnum;
+import com.starlink.clp.constant.FileTypeEnum;
 import com.starlink.clp.entity.School;
 import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.projection.school.SchoolInfo;
 import com.starlink.clp.repository.SchoolRepository;
-import com.starlink.clp.util.FileUtil;
+import com.starlink.clp.util.ImageUtil;
 import com.starlink.clp.util.IgnoreNullPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -83,7 +84,7 @@ public class SchoolService {
         if (oldSchool == null) {
             throw new ClpException(ExceptionEnum.SCHOOL_NOT_EXIST);
         }
-        String avatar = FileUtil.avatarProcess(avatarFile);
+        String avatar = ImageUtil.oneImageProcess(avatarFile, FileTypeEnum.SCHOOL_AVATAR);
         oldSchool.setAvatar(avatar);
         schoolRepo.save(oldSchool);
     }

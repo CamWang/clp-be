@@ -25,11 +25,16 @@ public enum ExceptionEnum {
     // 页请求异常
     PAGE_OUT_BOUND(440, "请求页面元素超限"),
     IMAGE_NOT_PRESENT(441, "没有上传图片"),
-    IMAGE_TOO_LARGE(442, "图片大小过大"),
+    IMAGE_TOO_LARGE(442, "图片大小超过2M限制"),
     IMAGE_TOO_MANY(443, "一次性上传图片过多"),
     IMAGE_NAME_EMPTY(444, "图片名为空"),
     IMAGE_NO_SUFFIX(445, "图片没有文件格式"),
     IDENTIFIER_PARAM_MISSING(446, "用户ID或用户名缺失"),
+    FILE_NOT_PRESENT(441, "没有上传文件"),
+    FILE_TOO_LARGE(442, "文件大小超过100M"),
+    FILE_TOO_MANY(443, "文件数量过多"),
+    FILE_NAME_EMPTY(444, "文件名称为空"),
+    FILE_NAME_DUPLICATED(447, "有重复命名文件"),
 
 
     // 安全异常
@@ -47,18 +52,22 @@ public enum ExceptionEnum {
     USER_NOT_EXIST(460, "用户不存在"),
 
 
-    // 学校活动异常
-    SCHOOL_NOT_EXIST(466, "学校未注册，请与系统管理员联系"),
-    SCHOOL_ALREADY_EXIST_ERROR(467, "学校已被注册，请与系统管理员联系"),
+    // 学校异常
+    SCHOOL_NOT_EXIST(460, "学校未注册，请与系统管理员联系"),
+    SCHOOL_ALREADY_EXIST_ERROR(409, "学校已被注册，请与系统管理员联系"),
     SCHOOL_PARAM_ERROR(468, "学校参数信息错误"),
     SCHOOL_INFO_MODIFY_EXCEPTION(469, "未发生有效的更改"),
 
     // 班级异常
-    CLAZZ_NOT_EXIST(461,"班级不存在"),
-    CLAZZ_ALREADY_EXIST_ERROR(462,"班级已经存在"),
+    CLAZZ_NOT_EXIST(460,"班级不存在"),
+    CLAZZ_ALREADY_EXIST_ERROR(409,"班级已经存在"),
+
+    // 队伍异常
+    TEAM_NOT_EXIST(460, "队伍不存在"),
 
     // 服务器内部异常
     IMAGE_WRITE_ERROR(470, "图片保存出错"),
+    FILE_WRITE_ERROR(470, "文件保存出错"),
 
     // 修改异常
     FATAL_BEAN_EXCEPTION(550, "修改信息时内部错误");

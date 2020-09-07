@@ -19,7 +19,9 @@ import java.util.Collection;
  */
 
 @Repository
-public interface ClazzRepository extends CrudRepository<Clazz,Integer>, PagingAndSortingRepository<Clazz,Integer>, JpaSpecificationExecutor<Clazz> {
+public interface ClazzRepository extends CrudRepository<Clazz,Integer>,
+        PagingAndSortingRepository<Clazz,Integer>,
+        JpaSpecificationExecutor<Clazz> {
     //展示所有班级列表
     Page<ClazzSimple> getAllBy(Pageable pageable);
     //根据学校id展示班级列表

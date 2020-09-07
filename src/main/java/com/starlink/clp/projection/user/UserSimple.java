@@ -25,6 +25,7 @@ public interface UserSimple {
     School getSchool();
     interface School {
         Integer getId();
+        String getAvatar();
         String getName();
     }
 

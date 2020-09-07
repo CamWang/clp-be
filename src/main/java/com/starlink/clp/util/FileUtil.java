@@ -1,6 +1,7 @@
 package com.starlink.clp.util;
 
 import com.starlink.clp.constant.ExceptionEnum;
+import com.starlink.clp.constant.FileTypeEnum;
 import com.starlink.clp.exception.ClpException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,104 +11,91 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
- * 保存文件的工具类
- * 目前只有保存图片的能力
- *
  * @author CamWang
- * @since 2020/8/13 16:30
+ * @since 2020/9/7 14:35
  */
-
 @Component
 public class FileUtil {
 
-    // 图片保存路径
     @Getter
-    public static String IMAGE_PATH;
-
-    // 图片最大大小
+    public static String EXECUTABLE_FILE_PATH;
     @Getter
-    public static Long IMAGE_MAX_SIZE;
+    public static String TEST_INPUT_FILE_PATH;
+    @Getter
+    public static String TEST_OUTPUT_FILE_PATH;
 
-    @Value("${clp.avatar.file.path}")
-    public void setImagePath(String filePath) {
-        IMAGE_PATH = filePath;
+    @Value("${clp.file.path.executable}")
+    public void setExecutableFilePath(String executableFilePath) {
+        EXECUTABLE_FILE_PATH = executableFilePath;
+    }
+    @Value("${clp.file.path.test.input}")
+    public void setTestInputFilePath(String testInputFilePath) {
+        TEST_INPUT_FILE_PATH = testInputFilePath;
+    }
+    @Value("${clp.file.path.test.output}")
+    public void setTestOutputFilePath(String testOutputFilePath) {
+        TEST_OUTPUT_FILE_PATH = testOutputFilePath;
     }
 
-    @Value("${clp.avatar.max.size}")
-    public void setImageMaxSize(Long imageMaxSize) {
-        IMAGE_MAX_SIZE = imageMaxSize;
+    @Getter
+    public static Long FILE_MAX_SIZE;
+
+    @Value("${clp.file.max.size}")
+    public void setFileMaxSize(Long fileMaxSize) {
+        FILE_MAX_SIZE = fileMaxSize;
     }
 
     /**
-     * 保存多个图片
-     * @param images 传入多个图片文件，文件名会使用UUID生成随机名称，
-     *               生成的文件名会作为返回值的一部分
-     * @param limit 限制文件数量最大为几个，超过数量会抛出IMAGE_TOO_MANY错误
-     * @return 返回所有已保存文件的用户名的ArrayList
-     *
+     * 功能基本和ImageUtil一致，去掉了UUID生成
      */
-    public static ArrayList<String> saveMultipleImages(MultipartFile[] images, Integer limit) {
-        ArrayList<String> savedImages = new ArrayList<>();
-        if (images == null) {
-            throw new ClpException(ExceptionEnum.IMAGE_NOT_PRESENT);
+    public static ArrayList<String> saveMultipleFiles(MultipartFile[] files, String path, Integer limit) {
+        ArrayList<String> savedFiles = new ArrayList<>();
+        if (files == null || files.length < 1) {
+            throw new ClpException(ExceptionEnum.FILE_NOT_PRESENT);
         }
-        if (images.length > limit) {
-            throw new ClpException(ExceptionEnum.IMAGE_TOO_MANY);
+        if (files.length > limit) {
+            throw new ClpException(ExceptionEnum.FILE_TOO_MANY);
         }
-        for (MultipartFile image : images) {
-            if (image == null) {
-                throw new ClpException(ExceptionEnum.IMAGE_NOT_PRESENT);
+        for (MultipartFile f : files) {
+            if (f == null) {
+                throw new ClpException(ExceptionEnum.FILE_NOT_PRESENT);
             }
-            if (image.getSize() > IMAGE_MAX_SIZE) {
-                throw new ClpException(ExceptionEnum.IMAGE_TOO_LARGE);
+            if (f.getSize() > FILE_MAX_SIZE) {
+                throw new ClpException(ExceptionEnum.FILE_TOO_LARGE);
             }
-            String originalFileName = image.getOriginalFilename();
-            String suffix = "";
-            if (originalFileName != null) {
-                suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
-            } else {
-                throw new ClpException(ExceptionEnum.IMAGE_NAME_EMPTY);
-            }
-            if (suffix.isEmpty()) {
-                throw new ClpException(ExceptionEnum.IMAGE_NO_SUFFIX);
-            }
-            String name = UUID.randomUUID().toString();
-            String fileName = name + suffix;
-            String filePath = IMAGE_PATH + fileName;
+            String fileName = f.getOriginalFilename();
+            String filePath = path + fileName;
             File file = new File(filePath);
             try {
-                image.transferTo(file);
-                savedImages.add(fileName);
+                f.transferTo(file);
+                savedFiles.add(fileName);
             } catch (IOException e) {
-                throw new ClpException(ExceptionEnum.IMAGE_WRITE_ERROR);
+                throw new ClpException(ExceptionEnum.FILE_WRITE_ERROR);
             }
         }
-        return savedImages;
+        return savedFiles;
     }
-
 
     /**
-     * 封装保存图片的方法用来做一些判空和校验
-     * 仅能保存一个图片
+     * 封装好仅能保存一个文件的方法
      *
-     * @return 返回保存好的图片名称
+     * @return 返回保存好的文件名称
      */
-    public static String avatarProcess(MultipartFile avatarFile) {
-        String avatar = null;
-        if (!(avatarFile == null || avatarFile.isEmpty())) {
+    public static String executableFileProcess(MultipartFile file, FileTypeEnum fileType) {
+        String path = EXECUTABLE_FILE_PATH;
+        String fileName = null;
+        if (!(file == null || file.isEmpty())) {
             try {
-                avatar = FileUtil.saveMultipleImages(new MultipartFile[]{avatarFile}, 1).get(0);
+                fileName = FileUtil.saveMultipleFiles(new MultipartFile[] {file}, path, 1).get(0);
             } catch (IndexOutOfBoundsException e) {
-                throw new ClpException(ExceptionEnum.IMAGE_WRITE_ERROR);
+                throw new ClpException(ExceptionEnum.FILE_WRITE_ERROR);
             }
-            if (avatar == null || avatar.isEmpty()) {
-                throw new ClpException(ExceptionEnum.IMAGE_WRITE_ERROR);
+            if (fileName == null || file.isEmpty()) {
+                throw new ClpException(ExceptionEnum.FILE_WRITE_ERROR);
             }
         }
-        return avatar;
+        return fileName;
     }
-
 }

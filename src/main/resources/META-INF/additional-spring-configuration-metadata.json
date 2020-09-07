@@ -6,9 +6,39 @@
       "description": "Max size in KB for avatars(default to 2MB = 2097152Bytes)."
     },
     {
-      "name": "clp.avatar.file.path",
+      "name": "clp.user.avatar.file.path",
       "type": "java.lang.String",
-      "description": "File path for Avatars."
+      "description": "File path for User Avatars."
+    },
+    {
+      "name": "clp.school.avatar.file.path",
+      "type": "java.lang.String",
+      "description": "File path for School Avatars."
+    },
+    {
+      "name": "clp.region.image.file.path",
+      "type": "java.lang.String",
+      "description": "File path for Region Images."
+    },
+    {
+      "name": "clp.file.max.size",
+      "type": "java.lang.Long",
+      "description": "Max size in KB for uploaded files(default to 100MB = 104,857,600Bytes)."
+    },
+    {
+      "name": "clp.executable.file.path",
+      "type": "java.lang.String",
+      "description": "File path for OJ Executables."
+    },
+    {
+      "name": "clp.test.input.file.path",
+      "type": "java.lang.String",
+      "description": "File path for OJ Test Inputs."
+    },
+    {
+      "name": "clp.test.output.file.path",
+      "type": "java.lang.String",
+      "description": "File path for OJ Test Outputs."
     }
   ]
 }
