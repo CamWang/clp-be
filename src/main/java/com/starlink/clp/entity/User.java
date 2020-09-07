@@ -1,6 +1,7 @@
 package com.starlink.clp.entity;
 
 import com.starlink.clp.validate.Empty;
+import com.starlink.clp.view.SubmissionSecurityView;
 import com.starlink.clp.view.UserModifiedView;
 import com.starlink.clp.view.UserRegisterView;
 import com.starlink.clp.view.UserSecurityView;
@@ -35,6 +36,7 @@ public class User implements Serializable, UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "int unsigned")
+    @Null(groups = {UserRegisterView.class}, message = "注册时不能携带ID")
     @Range(min = 0, max = 2097152, message = "用户ID范围超限")
     @NotNull(groups = {UserModifiedView.class}, message = "用户ID不能为空")
     private Integer id;

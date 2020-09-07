@@ -2,10 +2,17 @@ package com.starlink.clp.entity;
 
 import com.starlink.clp.constant.DifficultyEnum;
 import com.starlink.clp.constant.ProblemEnum;
+import com.starlink.clp.view.ProblemCreateView;
+import com.starlink.clp.view.ProblemModifiedView;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,13 +32,18 @@ public class Problem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "int unsigned")
+    @Null(groups = {ProblemCreateView.class}, message = "新增时不能传入ID")
+    @NotNull(groups = {ProblemModifiedView.class}, message = "学校ID不能为空")
+    @Range(groups = {ProblemModifiedView.class}, message = "问题ID范围超限")
     private Integer id;
 
     // 题目标题
     @Column(columnDefinition = "varchar(128)")
+    @NotEmpty(groups = {ProblemCreateView.class, ProblemModifiedView.class}, message = "题目标题不能为空")
+    @Length(groups = {ProblemCreateView.class, ProblemModifiedView.class},min = 1, max = 120, message = "题目标题长度在1-120字符之间")
     private String title;
 
-    // 题面
+    // 题面，如果是PDF等二进制文件格式则存储储存路径
     @Column(columnDefinition = "text")
     private String text;
 

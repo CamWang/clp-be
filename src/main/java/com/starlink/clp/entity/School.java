@@ -1,6 +1,7 @@
 package com.starlink.clp.entity;
 
 import com.starlink.clp.validate.Empty;
+import com.starlink.clp.view.SchoolAvatarView;
 import com.starlink.clp.view.SchoolModifiedView;
 import com.starlink.clp.view.SchoolRegisterView;
 import com.starlink.clp.view.SchoolSecurityView;
@@ -32,7 +33,7 @@ public class School implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "int unsigned")
     @NotNull(groups = {SchoolModifiedView.class}, message = "学校ID不能为空")
-    @Null(groups = {SchoolRegisterView.class, SchoolSecurityView.class}, message = "传入参数错误")
+    @Null(groups = {SchoolRegisterView.class}, message = "注册时不能携带ID")
     @Range(min = 0, max = 2097152, message = "学校ID范围超限")
     private Integer id;
 
@@ -45,32 +46,32 @@ public class School implements Serializable {
     // 学校描述
     @Column(columnDefinition = "varchar(255)")
     @NotNull(groups = {SchoolRegisterView.class}, message = "学校描述不能为空")
-    @Length(groups = {SchoolRegisterView.class}, min = 5, max = 255, message = "学校描述在10-255字符之间")
+    @Length(groups = {SchoolRegisterView.class}, min = 5, max = 255, message = "学校描述在5-200字符之间")
     private String description;
 
     // 学校图片
     @Column(columnDefinition = "varchar(255)")
-    @Null(groups = {SchoolRegisterView.class, SchoolSecurityView.class}, message = "传入参数错误")
+    @Null(groups = {SchoolAvatarView.class}, message = "传入参数错误")
     private String avatar;
 
     // 用户学校关联
     @OneToMany(mappedBy = "school", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @Empty(groups = {SchoolSecurityView.class}, message = "传入参数错误")
+    @Empty(groups = {SchoolSecurityView.class}, message = "安全检查失败")
     private Collection<User> user = new ArrayList<>();
 
     // 班级学校关联
     @OneToMany(mappedBy = "school", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @Empty(groups = {SchoolSecurityView.class}, message = "传入参数错误")
+    @Empty(groups = {SchoolSecurityView.class}, message = "安全检查失败")
     private Collection<Clazz> clazzes = new ArrayList<>();
 
     // 队伍学校关联
     @OneToMany(mappedBy = "school", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @Empty(groups = {SchoolSecurityView.class}, message = "传入参数错误")
+    @Empty(groups = {SchoolSecurityView.class}, message = "安全检查失败")
     private Collection<Team> teams = new ArrayList<>();
 
     // 比赛学校关联
     @ManyToMany(mappedBy = "schools", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @Empty(groups = {SchoolSecurityView.class}, message = "传入参数错误")
+    @Empty(groups = {SchoolSecurityView.class}, message = "安全检查失败")
     private Collection<Contest> contests;
 
     public School() {
