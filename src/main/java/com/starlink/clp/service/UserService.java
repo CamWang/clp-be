@@ -10,6 +10,7 @@ import com.starlink.clp.util.IgnoreNullPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +32,12 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -56,10 +60,7 @@ public class UserService {
         user.setSilenced(false);
         user.setLocked(false);
         user.setEnabled(true);
-        /**
-         * 使用当前Spring Security加密器对密码进行加密处理，添加Spring Security支持后从容器里取
-         * string PasswordEncoder.encode(rawPass)
-         */
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

@@ -50,6 +50,12 @@ public enum ExceptionEnum {
 
     // 登录异常
     USER_NOT_EXIST(460, "用户不存在"),
+    WRONG_PASSWORD(461, "密码错误"),
+    ACCOUNT_LOCKED(462, "账户已被锁定"),
+    CREDENTIALS_EXPIRED(463, "凭证过期"),
+    ACCOUNT_EXPIRED(464, "账户过期"),
+    ACCOUNT_DISABLED(465, "账户已被禁用"),
+    LOGIN_ERROR(466, "很抱歉登录失败"),
 
 
     // 学校异常
