@@ -188,7 +188,7 @@ public class User implements Serializable, UserDetails{
     // 账户是否过期 - 默认永不过期
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     // 账户是否锁定 - 根据数据库判断

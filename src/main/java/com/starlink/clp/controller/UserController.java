@@ -13,16 +13,16 @@ import com.starlink.clp.view.UserModifiedView;
 import com.starlink.clp.view.UserRegisterView;
 import com.starlink.clp.view.UserSecurityView;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -33,11 +33,13 @@ import javax.validation.constraints.NotNull;
  * @author CamWang
  * @since 2020/8/13 9:04
  */
+
+@CrossOrigin(origins = {"http://localhost:8080"})
 @RestController
 @Validated
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -66,11 +68,17 @@ public class UserController {
      */
     @GetMapping("/user/detail")
     @ResponseStatus(HttpStatus.OK)
-    public UserInfo getUserInfo() {
+    public UserInfo getUserInfo(
+            @AuthenticationPrincipal UserDetails userDetails
+            ) {
         /**
          *  需要验证是否为当前用户，如果是ADMIN则跳过验证
          */
-        return userService.getUserInfoById(1);
+        String username = userDetails.getUsername();
+        if (username == null) {
+            throw new ClpException(ExceptionEnum.LOGIN_SERVER_ERROR);
+        }
+        return userService.getUserInfoByUsername(username);
     }
 
 
@@ -94,8 +102,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public String userRegister(
             @RequestBody @Validated({UserRegisterView.class, UserSecurityView.class}) User user,
-            HttpServletRequest request
+            HttpServletRequest request,
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
+        if (userDetails != null) {
+            throw new ClpException(ExceptionEnum.NEED_LOGOUT);
+        }
         if (userService.testIfUsernamePresent(user.getUsername())) {
             throw new ClpException(ExceptionEnum.USER_ALREADY_EXIST_ERROR);
         }
@@ -114,8 +126,15 @@ public class UserController {
     public String changeUserInfoForUser(
             @RequestBody @Validated({UserModifiedView.class, UserSecurityView.class}) User user,
             @Length(min = 4, max = 32, message = "密码长度在4-32字符之间") String oldPassword,
-            HttpServletRequest request
+            HttpServletRequest request,
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
+        String username = userDetails.getUsername();
+        if (username == null) {
+            throw new ClpException(ExceptionEnum.LOGIN_SERVER_ERROR);
+        } else if (username.equals(user.getUsername())) {
+            throw new ClpException(ExceptionEnum.UNAUTHORIZED);
+        }
         user.setIp(request.getRemoteAddr());
         userService.modifyUser(user, oldPassword);
         return "用户信息修改成功";
@@ -129,20 +148,25 @@ public class UserController {
     @PostMapping("/user/avatar")
     @ResponseStatus(HttpStatus.OK)
     public String uploadAvatar(
-            @NotNull(message = "用户ID不能为空") @Range(min = 0, max = 2097152, message = "用户ID范围超限")
-                    Integer id,
-            @NotBlank(message = "用户名不能为空") @Length(min = 4, max = 32, message = "用户名长度在4-32字符")
+            @NotNull(message = "用户ID不能为空") @Length(min = 2, max = 32, message = "用户名范围超限")
                     String username,
-            @NotBlank(message = "密码不能为空") @Length(min = 4, max = 32, message = "密码长度在4-32字符")
-                    String password,
+//            @NotBlank(message = "密码不能为空") @Length(min = 4, max = 32, message = "密码长度在4-32字符")
+//                    String password,
             @NotNull(message = "头像文件未成功提交")
-                    MultipartFile avatarFile
+                    MultipartFile avatarFile,
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
+        String username1 = userDetails.getUsername();
+        if (username1 == null) {
+            throw new ClpException(ExceptionEnum.LOGIN_SERVER_ERROR);
+        } else if (username.equals(username1)) {
+            throw new ClpException(ExceptionEnum.UNAUTHORIZED);
+        }
         if (!userService.testIfUsernamePresent(username)) {
             throw new ClpException(ExceptionEnum.USER_NOT_EXIST);
         }
         String avatar = ImageUtil.oneImageProcess(avatarFile, FileTypeEnum.USER_AVATAR);
-        userService.setAvatar(id, username, password, avatar);
+        userService.setAvatar(username, avatar);
         return "头像上传成功";
     }
 }

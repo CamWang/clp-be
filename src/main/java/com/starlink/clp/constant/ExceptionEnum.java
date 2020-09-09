@@ -56,6 +56,9 @@ public enum ExceptionEnum {
     ACCOUNT_EXPIRED(464, "账户过期"),
     ACCOUNT_DISABLED(465, "账户已被禁用"),
     LOGIN_ERROR(466, "很抱歉登录失败"),
+    LOGIN_REQUIRED(490, "登录之后才能进行该操作"),
+    LOGIN_SERVER_ERROR(467, "服务器用户凭证丢失，请重新登录"),
+    NEED_LOGOUT(468, "需要登出后操作"),
 
 
     // 学校异常

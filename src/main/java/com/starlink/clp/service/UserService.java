@@ -10,6 +10,7 @@ import com.starlink.clp.util.IgnoreNullPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +48,8 @@ public class UserService {
 
     public Optional<User> getUserById(Integer id) { return userRepository.findById(id); }
 
-    public UserInfo getUserInfoById(Integer id) {
-        return userRepository.getFirstById(id);
+    public UserInfo getUserInfoByUsername(String username) {
+        return userRepository.getFirstByUsername(username);
     }
 
     public Boolean testIfUsernamePresent(String username) {
@@ -60,6 +61,7 @@ public class UserService {
         user.setSilenced(false);
         user.setLocked(false);
         user.setEnabled(true);
+        user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
@@ -70,26 +72,21 @@ public class UserService {
         if (oldUser == null) {
             throw new ClpException(ExceptionEnum.USER_NOT_EXIST);
         }
-        /**
-         * 添加密码比较，oldPassword与数据库存储的用户密码进行比较，添加Spring Security支持后从容器里取
-         * boolean PasswordEncoder.matches(pass1, pass2)
-         */
         BeanUtils.copyProperties(user, oldUser, IgnoreNullPropertiesUtil.getNullPropertyNames(user));
         userRepository.save(oldUser);
     }
 
     @Transactional
-    public void setAvatar(Integer id, String username, String password, String avatar) {
-        User oldUser = userRepository.findUserByUsernameAndId(username, id);
-        if (oldUser == null) {
+    public void setAvatar(String username, String avatar) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
             throw new ClpException(ExceptionEnum.USER_NOT_EXIST);
         }
-        /**
-         * 添加密码比较，oldPassword与数据库存储的用户密码进行比较，添加Spring Security支持后从容器里取
-         * boolean PasswordEncoder.matches(pass1, pass2)
-         */
-        oldUser.setAvatar(avatar);
-        userRepository.save(oldUser);
+//        if (!passwordEncoder.matches(password, user.getPassword())) {
+//            throw new ClpException(ExceptionEnum.WRONG_PASSWORD);
+//        }
+        user.setAvatar(avatar);
+        userRepository.save(user);
     }
 
 

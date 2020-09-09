@@ -42,6 +42,7 @@ public class ClpAuthenticationFailureHandler implements AuthenticationFailureHan
             response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.CREDENTIALS_EXPIRED)));
         } else if (e instanceof AccountExpiredException) {
             response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.ACCOUNT_EXPIRED)));
+            e.printStackTrace();
         } else if (e instanceof DisabledException) {
             response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.ACCOUNT_DISABLED)));
         } else {

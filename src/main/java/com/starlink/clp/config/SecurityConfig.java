@@ -5,8 +5,10 @@ import com.starlink.clp.security.ClpAuthenticationSuccessHandler;
 import com.starlink.clp.security.LoginAccessDeniedHandler;
 import com.starlink.clp.util.NoPasswordEncoder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Configuration;;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -37,6 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new NoPasswordEncoder();
     }
 
+    // 预请求放行
+    @Override
+    public void configure(final WebSecurity webSecurity) {
+        webSecurity.ignoring().antMatchers(HttpMethod.OPTIONS);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -59,15 +67,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/login").permitAll()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/h2/**").permitAll()
-                    .anyRequest().authenticated()
+                    .antMatchers(
+                            "/user",
+                            "/login",
+                            "/",
+                            "/h2/**")
+                    .permitAll()
+//                    .antMatchers(HttpMethod.POST, "/user").permitAll()
+//                    .antMatchers(HttpMethod.POST,"/user/avatar").hasRole("USER")
+//                    .antMatchers(HttpMethod.GET, "/user/detail").hasRole("USER")
+//                    .antMatchers(HttpMethod.PUT, "/user").hasRole("USER")
+                    .anyRequest()
+                    .authenticated()
                     .and()
                 .exceptionHandling()
                     .accessDeniedHandler(loginAccessDeniedHandler);
 
         http.csrf().disable();
         http.headers().frameOptions().disable();    // 访问H2数据库必须
+        http.cors();    // 启动跨域配置
     }
 }

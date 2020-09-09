@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer>, PagingAndSortingRepository<User, Integer>, JpaSpecificationExecutor<User> {
     Page<UserSimple> getAllBy(Pageable pageable);
-    UserInfo getFirstById(Integer id);
+    UserInfo getFirstByUsername(String username);
     Boolean existsUserByUsername(String username);
     User findUserByUsernameAndId(String username, Integer id);
     User findByUsername(String username);
