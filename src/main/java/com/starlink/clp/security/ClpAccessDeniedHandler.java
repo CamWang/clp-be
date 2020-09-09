@@ -3,6 +3,7 @@ package com.starlink.clp.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starlink.clp.constant.ExceptionEnum;
 import com.starlink.clp.exception.ClpException;
+import com.starlink.clp.exception.ExceptionResult;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -19,11 +20,11 @@ import java.io.IOException;
  * @since 2020/9/8 10:34
  */
 @Component
-public class LoginAccessDeniedHandler implements AccessDeniedHandler {
+public class ClpAccessDeniedHandler implements AccessDeniedHandler {
 
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
 
-    public LoginAccessDeniedHandler(ObjectMapper mapper) {
+    public ClpAccessDeniedHandler(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 
@@ -31,6 +32,8 @@ public class LoginAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
         httpServletResponse.setStatus(520);
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        httpServletResponse.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.UNAUTHORIZED)));
+        httpServletResponse.getWriter().write(mapper.writeValueAsString(
+                new ExceptionResult(ExceptionEnum.UNAUTHORIZED.getCode(), ExceptionEnum.UNAUTHORIZED.getMessage())
+        ));
     }
 }

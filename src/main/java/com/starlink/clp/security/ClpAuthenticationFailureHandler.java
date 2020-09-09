@@ -3,6 +3,7 @@ package com.starlink.clp.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starlink.clp.constant.ExceptionEnum;
 import com.starlink.clp.exception.ClpException;
+import com.starlink.clp.exception.ExceptionResult;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +22,7 @@ import java.io.IOException;
 @Component
 public class ClpAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper;
 
     public ClpAuthenticationFailureHandler(ObjectMapper mapper) {
         this.mapper = mapper;
@@ -29,24 +30,27 @@ public class ClpAuthenticationFailureHandler implements AuthenticationFailureHan
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        response.setStatus(467);
         response.setContentType("application/json;charset=UTF-8");
+        ExceptionEnum exceptionEnum;
 
-        if (e instanceof BadCredentialsException) {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.WRONG_PASSWORD)));
-        } else if (e instanceof UsernameNotFoundException) {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.USER_NOT_EXIST)));
+        if (e instanceof UsernameNotFoundException) {
+            exceptionEnum = ExceptionEnum.USER_NOT_EXIST;
+        } else if (e instanceof BadCredentialsException) {
+            exceptionEnum = ExceptionEnum.WRONG_PASSWORD;
         } else if (e instanceof LockedException) {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.ACCOUNT_LOCKED)));
+            exceptionEnum = ExceptionEnum.ACCOUNT_LOCKED;
         } else if (e instanceof CredentialsExpiredException) {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.CREDENTIALS_EXPIRED)));
+            exceptionEnum = ExceptionEnum.CREDENTIALS_EXPIRED;
         } else if (e instanceof AccountExpiredException) {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.ACCOUNT_EXPIRED)));
-            e.printStackTrace();
+            exceptionEnum = ExceptionEnum.ACCOUNT_EXPIRED;
         } else if (e instanceof DisabledException) {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.ACCOUNT_DISABLED)));
+            exceptionEnum = ExceptionEnum.ACCOUNT_DISABLED;
         } else {
-            response.getWriter().write(mapper.writeValueAsString(new ClpException(ExceptionEnum.LOGIN_ERROR)));
+            exceptionEnum = ExceptionEnum.LOGIN_ERROR;
         }
+        response.getWriter().write(mapper.writeValueAsString(
+                new ExceptionResult(exceptionEnum.getCode(), exceptionEnum.getMessage())
+        ));
+        response.setStatus(exceptionEnum.getCode());
     }
 }

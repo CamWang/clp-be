@@ -4,6 +4,7 @@ import com.starlink.clp.constant.ExceptionEnum;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -98,5 +99,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getCode())
                 .body(new ExceptionResult(ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getCode(), ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getMessage()));
     }
+
+    /**
+     * 获取认证信息失败错误
+     */
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    public ResponseEntity<ExceptionResult> internalAuthenticationServiceExceptionHandler(InternalAuthenticationServiceException e) {
+        return ResponseEntity.status(ExceptionEnum.INVALID_LOGIN.getCode())
+                .body(new ExceptionResult(ExceptionEnum.INVALID_LOGIN.getCode(), ExceptionEnum.INVALID_LOGIN.getMessage()));
+    }
+
 
 }

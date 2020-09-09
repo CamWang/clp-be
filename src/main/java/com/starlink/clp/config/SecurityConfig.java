@@ -1,8 +1,9 @@
 package com.starlink.clp.config;
 
+import com.starlink.clp.security.ClpAuthenticationEntryPoint;
 import com.starlink.clp.security.ClpAuthenticationFailureHandler;
 import com.starlink.clp.security.ClpAuthenticationSuccessHandler;
-import com.starlink.clp.security.LoginAccessDeniedHandler;
+import com.starlink.clp.security.ClpAccessDeniedHandler;
 import com.starlink.clp.util.NoPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * @author CamWang
@@ -22,16 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final ClpAuthenticationSuccessHandler clpAuthenticationSuccessHandler;
     private final ClpAuthenticationFailureHandler clpAuthenticationFailureHandler;
-    private final LoginAccessDeniedHandler loginAccessDeniedHandler;
+    private final ClpAccessDeniedHandler clpAccessDeniedHandler;
+    private final ClpAuthenticationEntryPoint clpAuthenticationEntryPoint;
 
     public SecurityConfig(
             ClpAuthenticationFailureHandler clpAuthenticationFailureHandler,
             ClpAuthenticationSuccessHandler clpAuthenticationSuccessHandler,
-            LoginAccessDeniedHandler loginAccessDeniedHandler
-    ) {
+            ClpAccessDeniedHandler clpAccessDeniedHandler,
+            ClpAuthenticationEntryPoint clpAuthenticationEntryPoint) {
         this.clpAuthenticationFailureHandler = clpAuthenticationFailureHandler;
         this.clpAuthenticationSuccessHandler = clpAuthenticationSuccessHandler;
-        this.loginAccessDeniedHandler = loginAccessDeniedHandler;
+        this.clpAccessDeniedHandler = clpAccessDeniedHandler;
+        this.clpAuthenticationEntryPoint = clpAuthenticationEntryPoint;
     }
 
     @Bean
@@ -63,15 +67,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureHandler(clpAuthenticationFailureHandler)
                     .and()
                 .logout()
-                    .logoutUrl("/logout")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .deleteCookies("JSESSIONID")
                     .and()
                 .authorizeRequests()
                     .antMatchers(
                             "/user",
                             "/login",
                             "/",
-                            "/h2/**")
+                            "/h2/**",
+                            "/logout")
                     .permitAll()
 //                    .antMatchers(HttpMethod.POST, "/user").permitAll()
 //                    .antMatchers(HttpMethod.POST,"/user/avatar").hasRole("USER")
@@ -81,7 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticated()
                     .and()
                 .exceptionHandling()
-                    .accessDeniedHandler(loginAccessDeniedHandler);
+                    .accessDeniedHandler(clpAccessDeniedHandler)
+                    .authenticationEntryPoint(clpAuthenticationEntryPoint);
 
         http.csrf().disable();
         http.headers().frameOptions().disable();    // 访问H2数据库必须

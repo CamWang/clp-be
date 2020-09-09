@@ -3,6 +3,7 @@ package com.starlink.clp.security;
 import com.starlink.clp.constant.ExceptionEnum;
 import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.repository.UserRepository;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +32,7 @@ public class ClpUserDetailsService implements UserDetailsService {
         if (userRepository.existsUserByUsername(username)) {
             return userRepository.findByUsername(username);
         } else {
-            throw new ClpException(ExceptionEnum.USER_NOT_EXIST);
+            throw new UsernameNotFoundException(username);
         }
     }
 }

@@ -50,7 +50,7 @@ public enum ExceptionEnum {
 
     // 登录异常
     USER_NOT_EXIST(460, "用户不存在"),
-    WRONG_PASSWORD(461, "密码错误"),
+    WRONG_PASSWORD(461, "用户名或密码错误"),
     ACCOUNT_LOCKED(462, "账户已被锁定"),
     CREDENTIALS_EXPIRED(463, "凭证过期"),
     ACCOUNT_EXPIRED(464, "账户过期"),
@@ -59,6 +59,7 @@ public enum ExceptionEnum {
     LOGIN_REQUIRED(490, "登录之后才能进行该操作"),
     LOGIN_SERVER_ERROR(467, "服务器用户凭证丢失，请重新登录"),
     NEED_LOGOUT(468, "需要登出后操作"),
+    INVALID_LOGIN(469, "认证失败"),
 
 
     // 学校异常
@@ -84,4 +85,12 @@ public enum ExceptionEnum {
 
     private Integer code;
     private String message;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"code\"=" + code +
+                ", \"message\"=\"" + message + '\"' +
+                '}';
+    }
 }
