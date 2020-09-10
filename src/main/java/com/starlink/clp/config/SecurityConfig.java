@@ -55,11 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 /**
                  *   // 打开该注释放开全部访问权限
                  *
-                 *  .authorizeRequests()
-                 *                     .anyRequest()
-                 *                     .permitAll()
-                 *                     .and()
+                 *
                  */
+                .authorizeRequests()
+                    .anyRequest()
+                    .permitAll()
+//                    .authenticated()
+                    .and()
 
                 .formLogin()
                     .loginProcessingUrl("/login")
@@ -72,21 +74,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .deleteCookies("JSESSIONID")
                     .and()
-                .authorizeRequests()
-                    .antMatchers(
-                            "/user",
-                            "/login",
-                            "/",
-                            "/h2/**",
-                            "/logout")
-                    .permitAll()
-//                    .antMatchers(HttpMethod.POST, "/user").permitAll()
-//                    .antMatchers(HttpMethod.POST,"/user/avatar").hasRole("USER")
-//                    .antMatchers(HttpMethod.GET, "/user/detail").hasRole("USER")
-//                    .antMatchers(HttpMethod.PUT, "/user").hasRole("USER")
-                    .anyRequest()
-                    .authenticated()
-                    .and()
+//                .authorizeRequests()
+//                    .antMatchers(
+//                            "/user",
+//                            "/login",
+//                            "/",
+//                            "/h2/**",
+//                            "/logout")
+//                    .permitAll()
+////                    .antMatchers(HttpMethod.POST, "/user").permitAll()
+////                    .antMatchers(HttpMethod.POST,"/user/avatar").hasRole("USER")
+////                    .antMatchers(HttpMethod.GET, "/user/detail").hasRole("USER")
+////                    .antMatchers(HttpMethod.PUT, "/user").hasRole("USER")
+//                    .anyRequest()
+//                    .authenticated()
+//                    .and()
                 .exceptionHandling()
                     .accessDeniedHandler(clpAccessDeniedHandler)
                     .authenticationEntryPoint(clpAuthenticationEntryPoint);

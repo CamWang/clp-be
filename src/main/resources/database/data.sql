@@ -30,6 +30,12 @@ INSERT INTO team (id, description, name, register, school_id) VALUES (7, '这个
 INSERT INTO team (id, description, name, register, school_id) VALUES (8, '这个队伍很懒没有描述', '曼谷国王队', '2020-08-07 10:21:22', 5);
 INSERT INTO team (id, description, name, register, school_id) VALUES (9, '这个队伍很懒没有描述', '阿姆斯特丹之光', '2020-08-07 10:21:22', 5);
 
+INSERT INTO news (id, content, title) VALUES (1, '## 齐工大牛逼1', '新闻1');
+INSERT INTO news (id, content, title) VALUES (2, '## 齐工大牛逼2', '新闻2');
+INSERT INTO news (id, content, title) VALUES (3, '## 齐工大牛逼3', '新闻3');
+INSERT INTO news (id, content, title) VALUES (4, '## 齐工大牛逼4', '新闻4');
+INSERT INTO news (id, content, title) VALUES (5, '## 齐工大牛逼5', '新闻5');
+
 INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (1, 0, 5, 5, '# 简单一加一题目  ## 题目描述  输出1+1的结果', 1.00, '简单一加一题目', 2, null, null);
 
 INSERT INTO language (id, code, enabled, memory_factor, name, time_factor) VALUES (1, 100, 1, 1, 'C', 1);

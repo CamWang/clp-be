@@ -27,10 +27,10 @@ public class ClpAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        httpServletResponse.setStatus(466);
+        httpServletResponse.setStatus(ExceptionEnum.LOGIN_REQUIRED.getCode());
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         httpServletResponse.getWriter().write(mapper.writeValueAsString(
-                new ExceptionResult(ExceptionEnum.LOGIN_ERROR.getCode(), ExceptionEnum.LOGIN_ERROR.getMessage())
+                new ExceptionResult(ExceptionEnum.LOGIN_REQUIRED.getCode(), ExceptionEnum.LOGIN_REQUIRED.getMessage())
         ));
         System.out.println(e.getMessage());
     }
