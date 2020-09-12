@@ -100,7 +100,7 @@ public class UserController {
      */
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public String userRegister(
+    public User userRegister(
             @RequestBody @Validated({UserRegisterView.class, UserSecurityView.class}) User user,
             HttpServletRequest request,
             @AuthenticationPrincipal UserDetails userDetails
@@ -112,8 +112,7 @@ public class UserController {
             throw new ClpException(ExceptionEnum.USER_ALREADY_EXIST_ERROR);
         }
         user.setIp(request.getRemoteAddr());
-        userService.registerUser(user);
-        return "注册成功";
+        return userService.registerUser(user);
     }
 
 

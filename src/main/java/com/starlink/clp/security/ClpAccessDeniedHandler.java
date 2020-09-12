@@ -2,11 +2,8 @@ package com.starlink.clp.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starlink.clp.constant.ExceptionEnum;
-import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.exception.ExceptionResult;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 

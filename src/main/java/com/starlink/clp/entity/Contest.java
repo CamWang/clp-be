@@ -104,4 +104,13 @@ public class Contest implements Serializable {
             inverseJoinColumns = @JoinColumn
     )
     private Collection<School> schools;
+
+    // 参加比赛的所有学校
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "problem_contest",
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn
+    )
+    private Collection<Problem> problems;
 }

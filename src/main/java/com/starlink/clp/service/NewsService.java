@@ -23,8 +23,8 @@ public class NewsService {
         return this.newsRepository.findBy(pageable);
     }
 
-    public void addNews(News news) {
+    public News addNews(News news) {
         news.setId(null);
-        this.newsRepository.save(news);
+        return newsRepository.save(news);
     }
 }

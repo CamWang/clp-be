@@ -56,7 +56,7 @@ public class UserService {
         return userRepository.existsUserByUsername(username);
     }
 
-    public void registerUser(User user) {
+    public User registerUser(User user) {
         user.setRegister(new Date());
         user.setSilenced(false);
         user.setLocked(false);
@@ -64,6 +64,7 @@ public class UserService {
         user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return user;
     }
 
     @Transactional

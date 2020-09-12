@@ -2,12 +2,14 @@ package com.starlink.clp.entity;
 
 import com.starlink.clp.constant.DifficultyEnum;
 import com.starlink.clp.constant.ProblemEnum;
+import com.starlink.clp.validate.Empty;
 import com.starlink.clp.view.ProblemCreateView;
 import com.starlink.clp.view.ProblemModifiedView;
+import com.starlink.clp.view.ProblemSecurityView;
+import com.starlink.clp.view.SchoolSecurityView;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -82,6 +84,70 @@ public class Problem implements Serializable {
     // 问题与问题标签关联
     @ManyToMany(mappedBy = "problems", cascade = CascadeType.PERSIST)
     private Collection<Tag> tags = new ArrayList<>();
+
+    // 比赛问题关联
+    @ManyToMany(mappedBy = "problems", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @Empty(groups = {ProblemSecurityView.class}, message = "安全检查失败")
+    private Collection<Contest> contests;
+
+    public Problem(String title, String text,Integer type, Integer difficulty, BigDecimal timeLimit, Integer memoryLimit, Integer outputLimit) {
+        this.title = title;
+        this.text = text;
+        this.type = getProblemEnumByInteger(type);
+        this.difficulty = getDifficultyEnumByInteger(difficulty);
+        this.timeLimit = timeLimit;
+        this.memoryLimit = memoryLimit;
+        this.outputLimit = outputLimit;
+    }
+
+    private DifficultyEnum getDifficultyEnumByInteger(Integer difficulty) {
+        DifficultyEnum difficultyEnum;
+        switch (difficulty) {
+            case(0):
+                difficultyEnum = DifficultyEnum.NOOB;
+                break;
+            case(1):
+                difficultyEnum = DifficultyEnum.BEGINNER;
+                break;
+            case(2):
+                difficultyEnum = DifficultyEnum.EASY;
+                break;
+            case(3):
+                difficultyEnum = DifficultyEnum.NORMAL;
+                break;
+            case(4):
+                difficultyEnum = DifficultyEnum.HARD;
+                break;
+            case(5):
+                difficultyEnum = DifficultyEnum.EXPERT;
+                break;
+            case(6):
+                difficultyEnum = DifficultyEnum.HELL;
+            default:
+                difficultyEnum = DifficultyEnum.NOOB;
+        }
+        return difficultyEnum;
+    }
+
+    private ProblemEnum getProblemEnumByInteger(Integer problem) {
+        ProblemEnum problemEnum;
+        switch (problem) {
+            case(0):
+                problemEnum = ProblemEnum.PDF;
+                break;
+            case(1):
+                problemEnum = ProblemEnum.MARKDOWN;
+                break;
+            case(2):
+                problemEnum = ProblemEnum.HTML;
+                break;
+            case(3):
+                problemEnum = ProblemEnum.LATEX;
+            default:
+                problemEnum = ProblemEnum.MARKDOWN;
+        }
+        return problemEnum;
+    }
 
 
 }

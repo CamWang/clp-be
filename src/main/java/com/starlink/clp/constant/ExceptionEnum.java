@@ -72,6 +72,10 @@ public enum ExceptionEnum {
     CLAZZ_NOT_EXIST(460,"班级不存在"),
     CLAZZ_ALREADY_EXIST_ERROR(409,"班级已经存在"),
 
+    // 比赛异常
+    CONTEST_NOT_EXIST(460, "比赛不存在"),
+    NO_CONTEST_AVALIBLE(461, "没有可显示的比赛"),
+
     // 队伍异常
     TEAM_NOT_EXIST(460, "队伍不存在"),
 

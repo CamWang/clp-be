@@ -35,10 +35,9 @@ public class NewsController {
 
     @PostMapping("/news")
     @ResponseStatus(HttpStatus.OK)
-    public String addNews(
-            @Validated News news
+    public News addNews(
+            @RequestBody @Validated News news
     ) {
-        this.newsService.addNews(news);
-        return "新闻保存成功";
+        return newsService.addNews(news);
     }
 }
