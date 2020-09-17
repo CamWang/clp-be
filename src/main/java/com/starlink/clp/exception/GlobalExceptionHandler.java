@@ -37,13 +37,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ExceptionEnum.PARAMETER_ERROR.getCode())
                 .body(new ExceptionResult(
                         ExceptionEnum.PARAMETER_ERROR.getCode(),
-                        "请求参数 " + e.getParameterName() + "不能为空"));
+                        "请求参数 " + e.getParameterName() + " 不能为空",
+                        "Parameter " + e.getParameterName() + " Must Not Empty"));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ExceptionResult> parameterBodyMissingExceptionHandler(HttpMessageNotReadableException e) {
         return ResponseEntity.status(ExceptionEnum.PARAMETER_ERROR.getCode())
-                .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(), "参数体格式错误"));
+                .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(), "参数体格式错误",
+                        "Parameter Format Error"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -56,13 +58,16 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.status(ExceptionEnum.PARAMETER_ERROR.getCode())
                         .body(new ExceptionResult(
                                 ExceptionEnum.PARAMETER_ERROR.getCode(),
+                                "方法字段错误",
                                 fieldError.getDefaultMessage()
+
                         ));
             }
         }
         return ResponseEntity.status(ExceptionEnum.PARAMETER_ERROR.getCode())
                 .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(),
-                        ExceptionEnum.PARAMETER_ERROR.getMessage()));
+                        ExceptionEnum.PARAMETER_ERROR.getMessageCn(),
+                        ExceptionEnum.PARAMETER_ERROR.getMessageEn()));
     }
 
     /**
@@ -72,7 +77,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FatalBeanException.class)
     public ResponseEntity<ExceptionResult> fatalBeanExceptionHandler(FatalBeanException e) {
         return ResponseEntity.status(ExceptionEnum.PARAMETER_ERROR.getCode())
-                .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(), e.getMessage()));
+                .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(), e.getMessage(), "Bean Validation Error"));
     }
 
     /**
@@ -87,7 +92,7 @@ public class GlobalExceptionHandler {
         x++;
         String s = st.substring(x).trim();
         return ResponseEntity.status(ExceptionEnum.PARAMETER_ERROR.getCode())
-                .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(), s));
+                .body(new ExceptionResult(ExceptionEnum.PARAMETER_ERROR.getCode(), s, "Validation Error"));
     }
 
     /**
@@ -97,7 +102,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<ExceptionResult> httpMediaTypeNotSupportedExceptionHandler(HttpMediaTypeNotSupportedException e) {
         return ResponseEntity.status(ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getCode())
-                .body(new ExceptionResult(ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getCode(), ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getMessage()));
+                .body(new ExceptionResult(ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getCode(),
+                        ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getMessageCn(),
+                        ExceptionEnum.PARAMETER_TYPE_NOT_SUPPORTED.getMessageEn()));
     }
 
     /**
@@ -106,7 +113,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public ResponseEntity<ExceptionResult> internalAuthenticationServiceExceptionHandler(InternalAuthenticationServiceException e) {
         return ResponseEntity.status(ExceptionEnum.INVALID_LOGIN.getCode())
-                .body(new ExceptionResult(ExceptionEnum.INVALID_LOGIN.getCode(), ExceptionEnum.INVALID_LOGIN.getMessage()));
+                .body(new ExceptionResult(ExceptionEnum.INVALID_LOGIN.getCode(),
+                        ExceptionEnum.INVALID_LOGIN.getMessageCn(),
+                        ExceptionEnum.INVALID_LOGIN.getMessageCn()));
     }
 
 

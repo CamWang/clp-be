@@ -11,18 +11,21 @@ import lombok.Data;
 @Data
 public class ExceptionResult {
     private Integer status;
-    private String message;
+    private String messageCn;
+    private String messageEn;
     private Long timestamp;
 
     public ExceptionResult(ExceptionEnum exceptionEnums) {
         this.status = exceptionEnums.getCode();
-        this.message = exceptionEnums.getMessage();
+        this.messageCn = exceptionEnums.getMessageCn();
+        this.messageEn = exceptionEnums.getMessageEn();
         this.timestamp = System.currentTimeMillis();
     }
 
-    public ExceptionResult(Integer status, String message) {
+    public ExceptionResult(Integer status, String messageCn, String messageEn) {
         this.status = status;
-        this.message = message;
+        this.messageCn = messageCn;
+        this.messageEn = messageEn;
         this.timestamp = System.currentTimeMillis();
     }
 }

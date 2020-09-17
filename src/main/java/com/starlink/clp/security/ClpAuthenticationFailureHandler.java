@@ -49,7 +49,7 @@ public class ClpAuthenticationFailureHandler implements AuthenticationFailureHan
             exceptionEnum = ExceptionEnum.LOGIN_ERROR;
         }
         response.getWriter().write(mapper.writeValueAsString(
-                new ExceptionResult(exceptionEnum.getCode(), exceptionEnum.getMessage())
+                new ExceptionResult(exceptionEnum.getCode(), exceptionEnum.getMessageCn(), exceptionEnum.getMessageEn())
         ));
         response.setStatus(exceptionEnum.getCode());
     }

@@ -2,6 +2,7 @@ package com.starlink.clp.service;
 
 import com.starlink.clp.entity.Problem;
 import com.starlink.clp.projection.problem.ProblemDetail;
+import com.starlink.clp.projection.problem.ProblemJudgeInfo;
 import com.starlink.clp.projection.problem.ProblemSimple;
 import com.starlink.clp.repository.ProblemRepository;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,9 @@ public class ProblemService {
         return problem;
     }
 
+    public ProblemJudgeInfo getProblemJudgeInfo(Integer id) {
+        return problemRepository.getFirstById(id);
+    }
 
 
 }

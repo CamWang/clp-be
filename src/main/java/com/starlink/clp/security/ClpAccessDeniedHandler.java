@@ -30,7 +30,9 @@ public class ClpAccessDeniedHandler implements AccessDeniedHandler {
         httpServletResponse.setStatus(520);
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         httpServletResponse.getWriter().write(mapper.writeValueAsString(
-                new ExceptionResult(ExceptionEnum.UNAUTHORIZED.getCode(), ExceptionEnum.UNAUTHORIZED.getMessage())
+                new ExceptionResult(ExceptionEnum.UNAUTHORIZED.getCode(),
+                        ExceptionEnum.UNAUTHORIZED.getMessageCn(),
+                        ExceptionEnum.UNAUTHORIZED.getMessageEn())
         ));
     }
 }

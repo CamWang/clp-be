@@ -22,21 +22,15 @@ public class FileUtil {
     @Getter
     public static String EXECUTABLE_FILE_PATH;
     @Getter
-    public static String TEST_INPUT_FILE_PATH;
-    @Getter
-    public static String TEST_OUTPUT_FILE_PATH;
+    public static String TEST_DATA_FILE_PATH;
 
     @Value("${clp.file.path.executable}")
     public void setExecutableFilePath(String executableFilePath) {
         EXECUTABLE_FILE_PATH = executableFilePath;
     }
-    @Value("${clp.file.path.test.input}")
-    public void setTestInputFilePath(String testInputFilePath) {
-        TEST_INPUT_FILE_PATH = testInputFilePath;
-    }
-    @Value("${clp.file.path.test.output}")
-    public void setTestOutputFilePath(String testOutputFilePath) {
-        TEST_OUTPUT_FILE_PATH = testOutputFilePath;
+    @Value("${clp.file.path.test.data}")
+    public void setTestInputFilePath(String testFilePath) {
+        TEST_DATA_FILE_PATH = testFilePath;
     }
 
     @Getter

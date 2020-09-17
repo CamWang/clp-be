@@ -6,29 +6,38 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum LanguageEnum {
-    C(100, "c"),
-    CPP(101, "cpp"),
-    CS(102, "cs"),
-    JAVA(103, "java"),
-    PYTHON(104, "python"),
-    JAVASCRIPT(105, "javascript"),
-    PHP(106, "php"),
-    GO(107, "go"),
-    SQL(108, "sql"),
-    CSS(109, "css"),
-    HTML(110, "html"),
-    BASH(111, "bash"),
-    MARKDOWN(112, "markdown"),
-    DOCKERFILE(113, "dockerfile"),
-    YAML(114, "yaml"),
-    MAKEFILE(115, "makefile"),
-    LATEX(116, "latex"),
-    JSON(117, "json"),
-    DJANGO(118, "django"),
-    SHELL(119, "shell"),
-    SCALA(120, "scala"),
-    PROPERTIES(121, "properties");
+    C("c", "c"),                // 0
+    CPP("cpp", "cc"),           // 1
+    PASCAL("pascal", "pas"),    // 2
+    JAVA("java", "java"),       // 3
+    RUBY("ruby", "rb"),         // 4
+    BASH("bash", "sh"),
+    PYTHON("python", "py"),     // 6
+    PHP("php", "php"),
+    PERL("perl", "pl"),
+    CS("cs", "cs"),             // 9
+    OBJC("objective-c", "m"),
+    FREEBASIC("freebasic", "bas"),
+    SCHEME("scheme", "scm"),    // 12
+    CLANG("clang", "c"),
+    CLANGPP("clangpp", "cc"),
+    LUA("lua", "lua"),          // 15
+    JAVASCRIPT("javascript", "js"), // 16
+    GO("go", "go"),             // 17
+    SQL("sql", "sql"),
+    CSS("css", ""),
+    HTML( "html", ""),
+    MARKDOWN("markdown", ""),
+    DOCKERFILE("dockerfile", ""),
+    YAML("yaml", ""),
+    MAKEFILE("makefile", ""),
+    LATEX("latex", ""),
+    JSON("json", ""),
+    DJANGO("django", ""),
+    SHELL("shell", ""),
+    SCALA("scala", ""),
+    PROPERTIES("properties", "");
 
-    private final Integer key;
     private final String name;
+    private final String command;
 }

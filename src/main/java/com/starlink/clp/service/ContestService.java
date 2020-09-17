@@ -1,7 +1,6 @@
 package com.starlink.clp.service;
 
 import com.starlink.clp.constant.ExceptionEnum;
-import com.starlink.clp.entity.Contest;
 import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.projection.contest.ContestDetail;
 import com.starlink.clp.projection.contest.ContestSimple;
@@ -25,7 +24,7 @@ public class ContestService {
 
     public Page<ContestSimple> getContest(Pageable pageable) {
         if (contestRepository.count() == 0) {
-            throw new ClpException(ExceptionEnum.NO_CONTEST_AVALIBLE);
+            throw new ClpException(ExceptionEnum.NO_CONTEST_AVAILABLE);
         }
         return contestRepository.findAllByEnabledIsTrue(pageable);
     }

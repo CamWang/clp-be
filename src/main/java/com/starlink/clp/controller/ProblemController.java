@@ -2,6 +2,7 @@ package com.starlink.clp.controller;
 
 import com.starlink.clp.entity.Problem;
 import com.starlink.clp.projection.problem.ProblemDetail;
+import com.starlink.clp.projection.problem.ProblemJudgeInfo;
 import com.starlink.clp.projection.problem.ProblemSimple;
 import com.starlink.clp.service.ProblemService;
 import com.starlink.clp.validate.ValidPage;
@@ -65,6 +66,22 @@ public class ProblemController {
             @RequestBody @Validated({ProblemCreateView.class})Problem problem
     ) {
         return problemService.createProblem(problem);
+    }
+
+    /**
+     * 获取判题题目信息
+     *
+     * in: Judge_Client
+     * method: _get_problem_info_http()
+     */
+    @PostMapping("/judge/problem")
+    public void getJudgeProblemInfo(
+            @RequestParam(name = "pid") Integer id
+    ) {
+        ProblemJudgeInfo problemJudgeInfo = problemService.getProblemJudgeInfo(id);
+        System.out.println(problemJudgeInfo.getTimeLimit());
+        System.out.println(problemJudgeInfo.getMemoryLimit());
+        System.out.println(problemJudgeInfo.getSpecialJudge()? 1 : 0);
     }
 
 

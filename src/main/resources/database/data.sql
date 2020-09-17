@@ -70,6 +70,7 @@ INSERT INTO user (id, avatar, email, enabled, ip, locked, nickname, password, ph
 INSERT INTO user (id, avatar, email, enabled, ip, locked, nickname, password, phone, register, role, silenced, student_id, username, clazz_id, school_id, team_id) VALUES (19, '019-teacher.png', 'romero@outlook.com', 1, null, 0, 'Romero', null, '13808945428', '2020-08-07 09:50:42', null, 0, '201701010019 ', 'romero', 10, 5, 9);
 INSERT INTO user (id, avatar, email, enabled, ip, locked, nickname, password, phone, register, role, silenced, student_id, username, clazz_id, school_id, team_id) VALUES (20, '020-teenager.png', 'stevens@outlook.com', 1, null, 0, 'Stevens', null, '13808945429', '2020-08-07 09:50:42', null, 0, '201701010020 ', 'stevens', 10, 5, 9);
 
+INSERT INTO submission (id, submit, language, code, contest_id, problem_id, user_id) VALUES (1, '2020-08-07 09:50:42', 1, '#include <iostream>', 1, 1, 1);
 
 INSERT INTO school_contest (contests_id, schools_id) VALUES (2, 1);
 INSERT INTO school_contest (contests_id, schools_id) VALUES (2, 2);

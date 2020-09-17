@@ -1,6 +1,7 @@
 package com.starlink.clp.entity;
 
 import com.starlink.clp.constant.LanguageEnum;
+import com.starlink.clp.constant.ResultEnum;
 import com.starlink.clp.view.SubmissionCreateView;
 import com.starlink.clp.view.SubmissionModifiedView;
 import com.starlink.clp.view.SubmissionSecurityView;
@@ -34,7 +35,7 @@ public class Submission implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "int unsigned")
     @Range(groups = {SubmissionModifiedView.class}, min = 0, max = 2097152, message = "题解ID范围超限")
-    @NotNull(groups = {SubmissionModifiedView.class}, message = "用户ID不能为空")
+    @NotNull(groups = {SubmissionModifiedView.class}, message = "题解ID不能为空")
     private Integer id;
 
     // 交题时间
@@ -64,14 +65,50 @@ public class Submission implements Serializable {
     private Date end;
 
     // 判题结果
-    @Column(columnDefinition = "varchar(32)")
+    @Enumerated
+    @Column(columnDefinition = "tinyint unsigned")
     @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
-    private String result;
+    private ResultEnum result;
+
+    // 题解运行时间
+    @Column(columnDefinition = "int unsigned")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private Integer time;
+
+    // 题解运行使用内存
+    @Column(columnDefinition = "int unsigned")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private Integer memory;
+
+    // 题解相似度 50 - 100
+    @Column(columnDefinition = "int unsigned")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private Integer sim;
+
+    // 与该题解相似的之前题解ID
+    @Column(columnDefinition = "int unsigned")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private Integer simId;
+
+    // 题解通过率
+    @Column(columnDefinition = "decimal(4,2)")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private Float passRate;
 
     // 判题错误信息
     @Column(columnDefinition = "text")
     @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
     private String error;
+
+    // 编译信息
+    @Column(columnDefinition = "text")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private String compileInfo;
+
+    // 运行信息
+    @Column(columnDefinition = "text")
+    @Null(groups = {SubmissionSecurityView.class}, message = "安全检查失败")
+    private String runInfo;
 
     // 重判题目
     @OneToMany(mappedBy = "submission", fetch = FetchType.LAZY)

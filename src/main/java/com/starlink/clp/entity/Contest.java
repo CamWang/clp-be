@@ -113,4 +113,7 @@ public class Contest implements Serializable {
             inverseJoinColumns = @JoinColumn
     )
     private Collection<Problem> problems;
+
+    public Contest() {
+    }
 }

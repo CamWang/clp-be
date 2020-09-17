@@ -69,6 +69,10 @@ public class Problem implements Serializable {
     @Column(columnDefinition = "int unsigned")
     private Integer outputLimit;
 
+    // Special Judge
+    @Column(columnDefinition = "tinyint default 0")
+    private Boolean specialJudge;
+
     // 问题与判题结果关联
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Collection<Submission> submissions = new ArrayList<>();
@@ -149,5 +153,6 @@ public class Problem implements Serializable {
         return problemEnum;
     }
 
-
+    public Problem() {
+    }
 }
