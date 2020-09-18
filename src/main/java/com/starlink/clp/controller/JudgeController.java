@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author CamWang
@@ -26,10 +23,42 @@ import java.util.List;
 @RequestMapping("/judge")
 public class JudgeController {
 
+    public static AtomicLong lastCheckin;
+
+    public static int running = 0;
+
     private JudgeService judgeService;
+
+    static {
+        lastCheckin = new AtomicLong(0);
+    }
 
     public JudgeController(JudgeService judgeService) {
         this.judgeService = judgeService;
+    }
+
+    /**
+     * 提交判题机运行数量
+     *
+     * Judged
+     * method: report_status()
+     */
+    @PostMapping("/status")
+    public void reportStatus(
+            @RequestParam("running") int count
+    ) {
+        running = count;
+    }
+
+    /**
+     * 前端获取判题机运行数量
+     *
+     * Judged
+     * method: report_status()
+     */
+    @PostMapping("/status")
+    public int reportStatus() {
+        return running;
     }
 
     /**
@@ -40,6 +69,8 @@ public class JudgeController {
      */
     @PostMapping("/check")
     public String checkLogin() {
+        long now = new Date().getTime();
+        lastCheckin.getAndSet(now);
         return "1";
     }
 
@@ -53,6 +84,8 @@ public class JudgeController {
     public String getJudgeSolution(
             @RequestParam(name = "max_running", required = false, defaultValue = "1") Integer limit
     ) {
+        long now = new Date().getTime();
+        lastCheckin.getAndSet(now);
         List<Integer> list =  judgeService.getJudgeSubmission(limit);
         if (list.isEmpty()) {
             return "";
@@ -92,12 +125,10 @@ public class JudgeController {
             @RequestParam(name = "sid") Integer id
     ) {
         SubmissionJudgeInfo submissionJudgeInfo = judgeService.getSubmissionInfo(id);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(submissionJudgeInfo.getProblem().getId()).append("\n");
-        stringBuilder.append(submissionJudgeInfo.getUser().getId()).append("\n");
-        stringBuilder.append(submissionJudgeInfo.getLanguage()).append("\n");
-        stringBuilder.append(submissionJudgeInfo.getContest().getId()).append("\n");
-        return stringBuilder.toString();
+        return submissionJudgeInfo.getProblem().getId() + "\n" +
+                submissionJudgeInfo.getUser().getId() + "\n" +
+                submissionJudgeInfo.getLanguage() + "\n" +
+                submissionJudgeInfo.getContest().getId() + "\n";
     }
 
     /**
