@@ -15,8 +15,8 @@ import org.springframework.stereotype.Repository;
 public interface ProblemRepository extends CrudRepository<Problem, Integer>,
         PagingAndSortingRepository<Problem, Integer>,
         JpaSpecificationExecutor<Problem> {
-    Page<ProblemSimple> findAllBy(Pageable pageable);
+    Page<ProblemSimple> getAllBy(Pageable pageable);
     ProblemDetail findFirstById(Integer id);
-
     ProblemJudgeInfo getFirstById(Integer id);
+    Page<ProblemSimple> findAllByTitleLike(String keyword, Pageable pageable);
 }

@@ -8,8 +8,10 @@ import com.starlink.clp.service.ProblemService;
 import com.starlink.clp.validate.ValidPage;
 import com.starlink.clp.view.ProblemCreateView;
 import com.starlink.clp.view.ProblemModifiedView;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -41,11 +43,31 @@ public class ProblemController {
     public Page<ProblemSimple> getAllProblemSimple(
             @ValidPage(message = "页面请求错误")Pageable pageable
     ) {
-        return problemService.getProblemSimleByPage(pageable);
+        System.out.println(pageable.toString());
+        return problemService.getProblemSimpleByPage(pageable);
     }
 
     /**
-     * 获取所有题目列表
+     * 通过关键字搜索
+     */
+    @PostMapping("/problem/search")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<ProblemSimple> searchProblem(
+            @Length(max = 20, message = "搜索最长20字")
+            @RequestParam(name = "keyword", defaultValue = "", required = false)
+                    String keyword,
+            @Range(min = 5, max = 20, message = "页面超范围")
+            @RequestParam(name = "size", defaultValue = "5", required = false)
+            Integer size,
+            @Range(min = 0, max = 500, message = "页面超范围")
+            @RequestParam(name = "page", defaultValue = "0", required = false)
+                    Integer page
+    ) {
+        return problemService.getProblemSimpleByKeyword(keyword, PageRequest.of(page, size));
+    }
+
+    /**
+     * 获取题目详情
      *
      * @param id 传入待查询的题目的ID
      */

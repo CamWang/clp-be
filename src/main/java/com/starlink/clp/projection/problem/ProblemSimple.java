@@ -1,18 +1,15 @@
 package com.starlink.clp.projection.problem;
 
 import com.starlink.clp.entity.Tag;
+import com.starlink.clp.projection.tag.TagInfo;
+
+import java.util.List;
 
 public interface ProblemSimple {
     Integer getId();
     String getTitle();
     Integer getType();
     Integer getDifficulty();
-    Tag getTags();
-    interface Tag {
-        Integer getId();
-        String getContent();
-        String getColor();
-        String getIcon();
-    }
+    List<TagInfo> getTags();
 
 }

@@ -36,11 +36,21 @@ INSERT INTO news (id, content, title) VALUES (3, '#### 齐工大牛逼3', '新�
 INSERT INTO news (id, content, title) VALUES (4, '#### 齐工大牛逼4', '新闻4');
 INSERT INTO news (id, content, title) VALUES (5, '### 齐工大牛逼5', '新闻5');
 
+INSERT INTO tag (id, category, content, color, icon) VALUES(1, 'problem', '二叉树', 'success', 'el-icon-medal');
+INSERT INTO tag (id, category, content, color, icon) VALUES(2, 'problem', '分治', 'info', 'el-icon-medal');
+INSERT INTO tag (id, category, content, color, icon) VALUES(3, 'problem', '动态规划', 'warning', 'el-icon-medal');
+INSERT INTO tag (id, category, content, color, icon) VALUES(4, 'problem', '字符串', 'danger', 'el-icon-medal');
+
 INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (1, 0, 5, 5, '# 萌新一加一题目  ## 题目描述  输出1+1的结果', 1.00, '简单一加一题目', 1, null, null);
 INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (2, 1, 10, 5, '# 新手题目  ## 题目描述  输出2+2的结果', 1.00, '新手题目', 1, null, null);
 INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (3, 2, 5, 10, '# 简单题目  ## 题目描述  输出3+3的结果', 1.00, '简单题目', 1, null, null);
 INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (4, 3, 20, 5, '# 普通题目  ## 题目描述  输出4+4的结果', 1.00, '普通题目', 1, null, null);
 INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (5, 4, 5, 5, '# 较难一加一题目  ## 题目描述  输出5+5的结果', 1.00, '较难一加一题目', 1, null, null);
+INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (6, 0, 5, 5, '# 萌新一加一题目  ## 题目描述  输出1+1的结果', 1.00, '简单一加一题目', 1, null, null);
+INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (7, 1, 10, 5, '# 新手题目  ## 题目描述  输出2+2的结果', 1.00, '新手题目', 1, null, null);
+INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (8, 2, 5, 10, '# 简单题目  ## 题目描述  输出3+3的结果', 1.00, '简单题目', 1, null, null);
+INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (9, 3, 20, 5, '# 普通题目  ## 题目描述  输出4+4的结果', 1.00, '普通题目', 1, null, null);
+INSERT INTO problem (id, difficulty, memory_limit, output_limit, text, time_limit, title, type, compare_script_id, run_script_id) VALUES (10, 4, 5, 5, '# 较难一加一题目  ## 题目描述  输出5+5的结果', 1.00, '较难一加一题目', 1, null, null);
 
 INSERT INTO language (id, code, enabled, memory_factor, name, time_factor) VALUES (1, 100, 1, 1, 'C', 1);
 INSERT INTO language (id, code, enabled, memory_factor, name, time_factor) VALUES (2, 101, 1, 1, 'C++', 1);
@@ -71,6 +81,9 @@ INSERT INTO user (id, avatar, email, enabled, ip, locked, nickname, password, ph
 INSERT INTO user (id, avatar, email, enabled, ip, locked, nickname, password, phone, register, role, silenced, student_id, username, clazz_id, school_id, team_id) VALUES (20, '020-teenager.png', 'stevens@outlook.com', 1, null, 0, 'Stevens', null, '13808945429', '2020-08-07 09:50:42', null, 0, '201701010020 ', 'stevens', 10, 5, 9);
 
 INSERT INTO submission (id, submit, language, code, contest_id, problem_id, user_id) VALUES (1, '2020-08-07 09:50:42', 1, '#include <iostream>', 1, 1, 1);
+INSERT INTO submission (id, submit, language, code, contest_id, problem_id, user_id) VALUES (2, '2020-08-07 09:50:42', 1, '#include <iostream>', 1, 1, 1);
+INSERT INTO submission (id, submit, language, code, contest_id, problem_id, user_id) VALUES (3, '2020-08-07 09:50:42', 1, '#include <iostream>', 1, 1, 1);
+INSERT INTO submission (id, submit, language, code, contest_id, problem_id, user_id) VALUES (4, '2020-08-07 09:50:42', 1, '#include <iostream>', 1, 1, 1);
 
 INSERT INTO school_contest (contests_id, schools_id) VALUES (2, 1);
 INSERT INTO school_contest (contests_id, schools_id) VALUES (2, 2);
@@ -86,3 +99,11 @@ INSERT INTO user_contest (joined_contests_id, users_id) VALUES (4, 1);
 INSERT INTO user_contest (joined_contests_id, users_id) VALUES (4, 2);
 INSERT INTO user_contest (joined_contests_id, users_id) VALUES (4, 3);
 INSERT INTO user_contest (joined_contests_id, users_id) VALUES (4, 4);
+
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(1, 1);
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(1, 2);
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(2, 3);
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(3, 3);
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(4, 3);
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(3, 4);
+INSERT INTO problem_tag (tags_id, problems_id) VALUES(4, 5);

@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 题目实体类
@@ -87,12 +88,12 @@ public class Problem implements Serializable {
 
     // 问题与问题标签关联
     @ManyToMany(mappedBy = "problems", cascade = CascadeType.PERSIST)
-    private Collection<Tag> tags = new ArrayList<>();
+    private List<Tag> tags;
 
     // 比赛问题关联
     @ManyToMany(mappedBy = "problems", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @Empty(groups = {ProblemSecurityView.class}, message = "安全检查失败")
-    private Collection<Contest> contests;
+    private List<Contest> contests;
 
     public Problem(String title, String text,Integer type, Integer difficulty, BigDecimal timeLimit, Integer memoryLimit, Integer outputLimit) {
         this.title = title;

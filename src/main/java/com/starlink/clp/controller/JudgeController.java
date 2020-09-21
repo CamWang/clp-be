@@ -4,10 +4,7 @@ import com.starlink.clp.constant.ResultEnum;
 import com.starlink.clp.entity.Submission;
 import com.starlink.clp.projection.submission.SubmissionJudgeInfo;
 import com.starlink.clp.service.JudgeService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class JudgeController {
      * Judged
      * method: report_status()
      */
-    @PostMapping("/status")
+    @GetMapping("/status")
     public int reportStatus() {
         return running;
     }
@@ -67,7 +64,7 @@ public class JudgeController {
      * Judged & Judge Client
      * method: check_login()
      */
-    @PostMapping("/check")
+    @PostMapping("check")
     public String checkLogin() {
         long now = new Date().getTime();
         lastCheckin.getAndSet(now);

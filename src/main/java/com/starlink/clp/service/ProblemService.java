@@ -22,8 +22,8 @@ public class ProblemService {
         this.problemRepository = problemRepository;
     }
 
-    public Page<ProblemSimple> getProblemSimleByPage(Pageable pageable) {
-        return problemRepository.findAllBy(pageable);
+    public Page<ProblemSimple> getProblemSimpleByPage(Pageable pageable) {
+        return problemRepository.getAllBy(pageable);
     }
 
     public ProblemDetail getProblemDetailById(Integer id) {
@@ -37,6 +37,10 @@ public class ProblemService {
 
     public ProblemJudgeInfo getProblemJudgeInfo(Integer id) {
         return problemRepository.getFirstById(id);
+    }
+
+    public Page<ProblemSimple> getProblemSimpleByKeyword(String keyword, Pageable pageable) {
+        return problemRepository.findAllByTitleLike("%"+keyword+"%", pageable);
     }
 
 
