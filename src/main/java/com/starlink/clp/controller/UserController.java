@@ -2,12 +2,14 @@ package com.starlink.clp.controller;
 
 import com.starlink.clp.constant.ExceptionEnum;
 import com.starlink.clp.constant.FileTypeEnum;
+import com.starlink.clp.entity.ImageCode;
 import com.starlink.clp.entity.User;
 import com.starlink.clp.exception.ClpException;
 import com.starlink.clp.projection.user.UserInfo;
 import com.starlink.clp.projection.user.UserSimple;
 import com.starlink.clp.service.UserService;
 import com.starlink.clp.util.ImageUtil;
+import com.starlink.clp.util.VerifyCodeUtil;
 import com.starlink.clp.validate.ValidPage;
 import com.starlink.clp.view.UserModifiedView;
 import com.starlink.clp.view.UserRegisterView;
@@ -20,10 +22,21 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
 
 /**
  * 用户Controller类
@@ -101,10 +114,16 @@ public class UserController {
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public User userRegister(
-            @RequestBody @Validated({UserRegisterView.class, UserSecurityView.class}) User user,
+            @Length(min = 2, max = 32, message = "用户名长度错误") @NotEmpty(message = "用户名不能为空") String username,
+            @Length(min = 2, max = 64, message = "密码长度错误") @NotEmpty(message = "密码不能为空") @RequestParam String password,
+            @Email @NotEmpty(message = "邮箱地址不能为空") String email,
             HttpServletRequest request,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
         if (userDetails != null) {
             throw new ClpException(ExceptionEnum.NEED_LOGOUT);
         }
@@ -167,5 +186,17 @@ public class UserController {
         String avatar = ImageUtil.oneImageProcess(avatarFile, FileTypeEnum.USER_AVATAR);
         userService.setAvatar(username, avatar);
         return "头像上传成功";
+    }
+
+    @RequestMapping("/captcha")
+    public void getVerifyCode(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        ImageCode imageCode = VerifyCodeUtil.createImageCode();
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("code", imageCode);
+        ImageIO.write(imageCode.getImage(), "jpeg", response.getOutputStream());
     }
 }

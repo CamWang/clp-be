@@ -1,8 +1,10 @@
 package com.starlink.clp.projection.contest;
 
 import com.starlink.clp.constant.ContestEnum;
+import com.starlink.clp.projection.problem.ProblemSimple;
 
 import java.util.Date;
+import java.util.List;
 
 public interface ContestDetail {
     Integer getId();
@@ -15,11 +17,5 @@ public interface ContestDetail {
     Date getEnd();
     Date getFinish();
 
-    Problem getProblems();
-    interface Problem {
-        Integer getId();
-        String getTitle();
-        Integer getType();
-        Integer getDifficulty();
-    }
+    List<ProblemSimple> getProblems();
 }

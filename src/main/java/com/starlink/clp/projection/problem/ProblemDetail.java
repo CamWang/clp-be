@@ -1,5 +1,9 @@
 package com.starlink.clp.projection.problem;
 
+import com.starlink.clp.projection.tag.TagInfo;
+
+import java.util.List;
+
 public interface ProblemDetail {
     Integer getId();
     String getTitle();
@@ -10,11 +14,5 @@ public interface ProblemDetail {
     Integer getOutputLimit();
     Integer getTimeLimit();
 
-    Tag getTags();
-    interface Tag {
-        Integer getId();
-        String getContent();
-        String getColor();
-        String getIcon();
-    }
+    List<TagInfo> getTags();
 }

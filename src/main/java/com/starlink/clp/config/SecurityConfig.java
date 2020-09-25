@@ -1,9 +1,6 @@
 package com.starlink.clp.config;
 
-import com.starlink.clp.security.ClpAuthenticationEntryPoint;
-import com.starlink.clp.security.ClpAuthenticationFailureHandler;
-import com.starlink.clp.security.ClpAuthenticationSuccessHandler;
-import com.starlink.clp.security.ClpAccessDeniedHandler;
+import com.starlink.clp.security.*;
 import com.starlink.clp.util.NoPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;;
@@ -12,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -26,16 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final ClpAuthenticationFailureHandler clpAuthenticationFailureHandler;
     private final ClpAccessDeniedHandler clpAccessDeniedHandler;
     private final ClpAuthenticationEntryPoint clpAuthenticationEntryPoint;
+    private final ValidateCodeFilter validateCodeFilter;
 
     public SecurityConfig(
             ClpAuthenticationFailureHandler clpAuthenticationFailureHandler,
             ClpAuthenticationSuccessHandler clpAuthenticationSuccessHandler,
             ClpAccessDeniedHandler clpAccessDeniedHandler,
-            ClpAuthenticationEntryPoint clpAuthenticationEntryPoint) {
+            ClpAuthenticationEntryPoint clpAuthenticationEntryPoint,
+            ValidateCodeFilter validateCodeFilter
+    ) {
         this.clpAuthenticationFailureHandler = clpAuthenticationFailureHandler;
         this.clpAuthenticationSuccessHandler = clpAuthenticationSuccessHandler;
         this.clpAccessDeniedHandler = clpAccessDeniedHandler;
         this.clpAuthenticationEntryPoint = clpAuthenticationEntryPoint;
+        this.validateCodeFilter = validateCodeFilter;
     }
 
     @Bean
@@ -62,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
 //                    .authenticated()
                     .and()
-
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                     .loginProcessingUrl("/login")
                     .successHandler(clpAuthenticationSuccessHandler)

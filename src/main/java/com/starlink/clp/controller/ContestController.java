@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * @author CamWang
  * @since 2020/9/7 9:29
@@ -44,6 +46,12 @@ public class ContestController {
             @Range(min = 1, max = 2000, message = "比赛ID范围超界") Integer id
     ) {
         return contestService.getContestDetail(id);
+    }
+
+    @GetMapping("/contest/time")
+    @ResponseStatus(HttpStatus.OK)
+    public Date getServerDate() {
+        return new Date();
     }
 
 
